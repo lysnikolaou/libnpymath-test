@@ -23,34 +23,6 @@
 #endif
 
 /*
- * gcc does not unroll even with -O3
- * use with care, unrolling on modern cpus rarely speeds things up
- */
-#ifdef HAVE_ATTRIBUTE_OPTIMIZE_UNROLL_LOOPS
-#define NPY_GCC_UNROLL_LOOPS \
-    __attribute__((optimize("unroll-loops")))
-#else
-#define NPY_GCC_UNROLL_LOOPS
-#endif
-
-/* highest gcc optimization level, enabled autovectorizer */
-#ifdef HAVE_ATTRIBUTE_OPTIMIZE_OPT_3
-#define NPY_GCC_OPT_3 __attribute__((optimize("O3")))
-#else
-#define NPY_GCC_OPT_3
-#endif
-
-/*
- * mark an argument (starting from 1) that must not be NULL and is not checked
- * DO NOT USE IF FUNCTION CHECKS FOR NULL!! the compiler will remove the check
- */
-#ifdef HAVE_ATTRIBUTE_NONNULL
-#define NPY_GCC_NONNULL(n) __attribute__((nonnull(n)))
-#else
-#define NPY_GCC_NONNULL(n)
-#endif
-
-/*
  * give a hint to the compiler which branch is more likely or unlikely
  * to occur, e.g. rare error cases:
  *
@@ -122,15 +94,6 @@
     #define npy_lseek _lseeki64
     #define npy_off_t npy_int64
 
-    #if NPY_SIZEOF_INT == 8
-        #define NPY_OFF_T_PYFMT "i"
-    #elif NPY_SIZEOF_LONG == 8
-        #define NPY_OFF_T_PYFMT "l"
-    #elif NPY_SIZEOF_LONGLONG == 8
-        #define NPY_OFF_T_PYFMT "L"
-    #else
-        #error Unsupported size for type off_t
-    #endif
 #else
     #define npy_fseek fseek
     #define npy_ftell ftell
@@ -139,17 +102,6 @@
     #define npy_lseek lseek
     #define npy_off_t off_t
 
-    #if NPY_SIZEOF_OFF_T == NPY_SIZEOF_SHORT
-        #define NPY_OFF_T_PYFMT "h"
-    #elif NPY_SIZEOF_OFF_T == NPY_SIZEOF_INT
-        #define NPY_OFF_T_PYFMT "i"
-    #elif NPY_SIZEOF_OFF_T == NPY_SIZEOF_LONG
-        #define NPY_OFF_T_PYFMT "l"
-    #elif NPY_SIZEOF_OFF_T == NPY_SIZEOF_LONGLONG
-        #define NPY_OFF_T_PYFMT "L"
-    #else
-        #error Unsupported size for type off_t
-    #endif
 #endif
 
 /* enums for detected endianness */
@@ -173,8 +125,6 @@ typedef Py_uintptr_t npy_uintp;
 #define NPY_SIZEOF_BYTE 1
 #define NPY_SIZEOF_DATETIME 8
 #define NPY_SIZEOF_TIMEDELTA 8
-#define NPY_SIZEOF_INTP NPY_SIZEOF_PY_INTPTR_T
-#define NPY_SIZEOF_UINTP NPY_SIZEOF_PY_INTPTR_T
 #define NPY_SIZEOF_HALF 2
 #define NPY_SIZEOF_CFLOAT NPY_SIZEOF_COMPLEX_FLOAT
 #define NPY_SIZEOF_CDOUBLE NPY_SIZEOF_COMPLEX_DOUBLE
@@ -186,54 +136,6 @@ typedef Py_uintptr_t npy_uintp;
 
 #define NPY_SSIZE_T_PYFMT "n"
 #define constchar char
-
-/* NPY_INTP_FMT Note:
- *      Unlike the other NPY_*_FMT macros, which are used with PyOS_snprintf,
- *      NPY_INTP_FMT is used with PyErr_Format and PyUnicode_FromFormat. Those
- *      functions use different formatting codes that are portably specified
- *      according to the Python documentation. See issue gh-2388.
- */
-#if NPY_SIZEOF_PY_INTPTR_T == NPY_SIZEOF_INT
-        #define NPY_INTP NPY_INT
-        #define NPY_UINTP NPY_UINT
-        #define PyIntpArrType_Type PyIntArrType_Type
-        #define PyUIntpArrType_Type PyUIntArrType_Type
-        #define NPY_MAX_INTP NPY_MAX_INT
-        #define NPY_MIN_INTP NPY_MIN_INT
-        #define NPY_MAX_UINTP NPY_MAX_UINT
-        #define NPY_INTP_FMT "d"
-#elif NPY_SIZEOF_PY_INTPTR_T == NPY_SIZEOF_LONG
-        #define NPY_INTP NPY_LONG
-        #define NPY_UINTP NPY_ULONG
-        #define PyIntpArrType_Type PyLongArrType_Type
-        #define PyUIntpArrType_Type PyULongArrType_Type
-        #define NPY_MAX_INTP NPY_MAX_LONG
-        #define NPY_MIN_INTP NPY_MIN_LONG
-        #define NPY_MAX_UINTP NPY_MAX_ULONG
-        #define NPY_INTP_FMT "ld"
-#elif defined(PY_LONG_LONG) && (NPY_SIZEOF_PY_INTPTR_T == NPY_SIZEOF_LONGLONG)
-        #define NPY_INTP NPY_LONGLONG
-        #define NPY_UINTP NPY_ULONGLONG
-        #define PyIntpArrType_Type PyLongLongArrType_Type
-        #define PyUIntpArrType_Type PyULongLongArrType_Type
-        #define NPY_MAX_INTP NPY_MAX_LONGLONG
-        #define NPY_MIN_INTP NPY_MIN_LONGLONG
-        #define NPY_MAX_UINTP NPY_MAX_ULONGLONG
-        #define NPY_INTP_FMT "lld"
-#endif
-
-/*
- * We can only use C99 formats for npy_int_p if it is the same as
- * intp_t, hence the condition on HAVE_UNITPTR_T
- */
-#if (NPY_USE_C99_FORMATS) == 1 \
-        && (defined HAVE_UINTPTR_T) \
-        && (defined HAVE_INTTYPES_H)
-        #include <inttypes.h>
-        #undef NPY_INTP_FMT
-        #define NPY_INTP_FMT PRIdPTR
-#endif
-
 
 /*
  * Some platforms don't define bool, long long, or long double.
@@ -327,9 +229,6 @@ typedef int npy_int;
 typedef long npy_long;
 typedef float npy_float;
 typedef double npy_double;
-
-typedef Py_hash_t npy_hash_t;
-#define NPY_SIZEOF_HASH_T NPY_SIZEOF_INTP
 
 #ifdef __cplusplus
 extern "C++" {
@@ -429,7 +328,6 @@ typedef longdouble_t _Complex npy_clongdouble;
 #define NPY_BITSOF_INT (NPY_SIZEOF_INT * CHAR_BIT)
 #define NPY_BITSOF_LONG (NPY_SIZEOF_LONG * CHAR_BIT)
 #define NPY_BITSOF_LONGLONG (NPY_SIZEOF_LONGLONG * CHAR_BIT)
-#define NPY_BITSOF_INTP (NPY_SIZEOF_INTP * CHAR_BIT)
 #define NPY_BITSOF_HALF (NPY_SIZEOF_HALF * CHAR_BIT)
 #define NPY_BITSOF_FLOAT (NPY_SIZEOF_FLOAT * CHAR_BIT)
 #define NPY_BITSOF_DOUBLE (NPY_SIZEOF_DOUBLE * CHAR_BIT)

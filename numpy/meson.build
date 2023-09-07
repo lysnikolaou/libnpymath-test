@@ -35,19 +35,6 @@ else
   name_suffix_staticlib = []
 endif
 
-# Enable UNIX large file support on 32-bit systems (64 bit off_t,
-# lseek -> lseek64, etc.)
-cflags_large_file_support = []
-if host_machine.system() == 'aix'
-  cflags_large_file_support += '-D_LARGE_FILES'
-else
-  cflags_large_file_support += [
-    '-D_FILE_OFFSET_BITS=64',
-    '-D_LARGEFILE_SOURCE=1',
-    '-D_LARGEFILE64_SOURCE=1',
-  ]
-endif
-
 src_file_cli = find_program('_build_utils/process_src_template.py')
 src_file = generator(src_file_cli,
   arguments : ['@INPUT@', '--outfile', '@OUTPUT@'],

@@ -15,11 +15,6 @@ types_to_check = [
 foreach symbol_type: types_to_check
   cdata.set(symbol_type[0], cc.sizeof(symbol_type[1]))
 endforeach
-cdata.set('NPY_SIZEOF_OFF_T', cc.sizeof('off_t', prefix: '#include <sys/types.h>'))
-cdata.set('NPY_SIZEOF_PY_INTPTR_T',
-  cc.sizeof('Py_intptr_t', dependencies: py_dep, prefix: '#include <Python.h>'))
-cdata.set('NPY_SIZEOF_PY_LONG_LONG',
-  cc.sizeof('PY_LONG_LONG', dependencies: py_dep, prefix: '#include <Python.h>'))
 
 # Check for complex support
 if not cc.has_header('complex.h')
@@ -251,20 +246,6 @@ endif
 if cc.has_header('sys/endian.h')
   cdata.set10('NPY_HAVE_SYS_ENDIAN_H', true)
 endif
-if is_windows
-  cdata.set10('NPY_NO_SIGNAL', true)
-endif
-
-# Check whether we can use inttypes (C99) formats
-if cc.has_header_symbol('inttypes.h', 'PRIdPTR')
-  cdata.set10('NPY_USE_C99_FORMATS', true)
-endif
-
-visibility_hidden = ''
-if cc.has_function_attribute('visibility:hidden') and host_machine.system() != 'cygwin'
-  visibility_hidden = '__attribute__((visibility("hidden")))'
-endif
-cdata.set('NPY_VISIBILITY_HIDDEN', visibility_hidden)
 
 np_dir = py.get_install_dir() / 'numpy'
 

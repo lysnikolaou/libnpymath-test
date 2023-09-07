@@ -9,13 +9,4 @@
 #mesondefine NPY_SIZEOF_COMPLEX_DOUBLE
 #mesondefine NPY_SIZEOF_LONGDOUBLE
 #mesondefine NPY_SIZEOF_COMPLEX_LONGDOUBLE
-#mesondefine NPY_SIZEOF_PY_INTPTR_T
-#mesondefine NPY_SIZEOF_OFF_T
-#mesondefine NPY_SIZEOF_PY_LONG_LONG
 #mesondefine NPY_SIZEOF_LONGLONG
-
-#mesondefine NPY_USE_C99_FORMATS
-
-#mesondefine NPY_NO_SIGNAL
-
-#mesondefine NPY_VISIBILITY_HIDDEN
