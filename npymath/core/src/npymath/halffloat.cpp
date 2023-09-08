@@ -15,7 +15,7 @@
  *                   HALF-PRECISION ROUTINES                        *
  ********************************************************************
  */
-using namespace np;
+using namespace npymath;
 
 float npy_half_to_float(npy_half h)
 {

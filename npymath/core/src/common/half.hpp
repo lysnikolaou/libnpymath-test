@@ -11,7 +11,7 @@
 // - enables __fp16 causes massive FP exceptions on aarch64,
 //   needs a deep investigation
 
-namespace np {
+namespace npymath {
 
 /// @addtogroup cpp_core_types
 /// @{
@@ -258,6 +258,6 @@ class Half final {
 
 /// @} cpp_core_types
 
-} // namespace np
+} // namespace npymath
 
 #endif // NPYMATH_HALF_HPP

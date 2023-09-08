@@ -5,7 +5,7 @@
 
 #include <fenv.h>
 
-namespace np {
+namespace npymath {
 
 /// @addtogroup cpp_core_utility
 /// @{
@@ -128,7 +128,7 @@ class FloatStatus {
 };
 
 /// @} cpp_core_utility
-} // namespace np
+} // namespace npymath
 
 #endif // NPYMATH_FLOAT_STATUS_HPP
 

@@ -10,7 +10,7 @@
 #include <type_traits>
 #include <string.h>
 
-namespace np {
+namespace npymath {
 
 /** Create a value of type `To` from the bits of `from`.
  *
@@ -46,6 +46,6 @@ To BitCast(const From &from) noexcept
 #endif
 }
 
-} // namespace np
+} // namespace npymath
 #endif // NPYMATH_UTILS_HPP
 

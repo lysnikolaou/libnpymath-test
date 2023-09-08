@@ -8,7 +8,7 @@
  * The following functions that emulating float/double/half conversions
  * are copied from npymath without any changes to its functionality.
  */
-namespace np { namespace half_private {
+namespace npymath { namespace half_private {
 
 template<bool gen_overflow=true, bool gen_underflow=true, bool round_even=true>
 inline uint16_t FromFloatBits(uint32_t f)
@@ -326,5 +326,5 @@ constexpr uint64_t ToDoubleBits(uint16_t h)
     }
 }
 
-}} // namespace np::half_private
+}} // namespace npymath::half_private
 #endif // NPYMATH_HALF_PRIVATE_HPP

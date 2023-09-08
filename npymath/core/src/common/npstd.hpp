@@ -18,7 +18,7 @@
 
 #include "npymath_config.h"
 
-namespace np {
+namespace npymath {
 /// @addtogroup cpp_core_types
 /// @{
 using std::uint8_t;
@@ -51,7 +51,7 @@ using LongDouble = typename std::conditional<
 >::type;
 /// @} cpp_core_types
 
-} // namespace np
+} // namespace npymath
 
 #endif // NPYMATH_NPSTD_HPP
 
