@@ -8,7 +8,6 @@
 #include "utils.hpp"
 #include "npstd.hpp"
 #include "half.hpp"
-#include "meta.hpp"
 #include "float_status.hpp"
 
 #endif // NUMPY_CORE_SRC_COMMON_COMMON_HPP

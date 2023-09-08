@@ -4,7 +4,6 @@ installed_headers = [
   'numpy/npy_cpu.h',
   'numpy/npy_endian.h',
   'numpy/npy_math.h',
-  'numpy/npy_os.h',
   'numpy/numpyconfig.h',
   'numpy/utils.h',
 ]

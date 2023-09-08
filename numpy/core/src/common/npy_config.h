@@ -4,7 +4,6 @@
 #include "config.h"
 #include "numpy/numpyconfig.h"
 #include "numpy/utils.h"
-#include "numpy/npy_os.h"
 
 /* blocklist */
 
@@ -81,7 +80,7 @@
 #endif /* defined(_MSC_VER) && defined(__INTEL_COMPILER) */
 
 /* powl gives zero division warning on OS X, see gh-8307 */
-#if defined(NPY_OS_DARWIN)
+#if defined(__APPLE__)
 #define NPY_BLOCK_POWL
 #endif
 

@@ -3,7 +3,6 @@
 
 #include "npy_config.h"
 
-#include "numpy/npy_os.h"
 #include "numpy/npy_cpu.h"
 #include "numpy/npy_common.h"
 
