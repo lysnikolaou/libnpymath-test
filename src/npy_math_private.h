@@ -29,9 +29,9 @@ using std::isless;
 
 #include "npymath_fpmath.h"
 
-#include "numpy/npy_math.h"
-#include "numpy/npymath_endian.h"
-#include "numpy/npymath_common.h"
+#include "npy_math.h"
+#include "npymath_endian.h"
+#include "npymath_common.h"
 
 /*
  * The original fdlibm code used statements like:

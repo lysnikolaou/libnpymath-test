@@ -1,7 +1,7 @@
 #ifndef NPY_MATH_H_
 #define NPY_MATH_H_
 
-#include <numpy/npymath_common.h>
+#include "npymath_common.h"
 
 #include <math.h>
 

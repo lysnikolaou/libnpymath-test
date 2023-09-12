@@ -3,8 +3,8 @@
 
 #include "npymath_config.h"
 
-#include "numpy/npymath_cpu.h"
-#include "numpy/npymath_common.h"
+#include "npymath_cpu.h"
+#include "npymath_common.h"
 
 #if !(defined(HAVE_LDOUBLE_IEEE_QUAD_BE) || \
       defined(HAVE_LDOUBLE_IEEE_QUAD_LE) || \

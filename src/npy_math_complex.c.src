@@ -33,7 +33,7 @@
  */
 #include "npy_math_common.h"
 #include "npy_math_private.h"
-#include <numpy/utils.h>
+#include "utils.h"
 
 /*
  * Hack inherited from BSD, the intent is to set the FPU inexact

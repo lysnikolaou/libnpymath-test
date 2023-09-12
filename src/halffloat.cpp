@@ -7,7 +7,7 @@
 #define NPY_HALF_GENERATE_OVERFLOW 1
 #define NPY_HALF_GENERATE_INVALID 1
 
-#include "numpy/halffloat.h"
+#include "halffloat.h"
 
 #include "common.hpp"
 /*

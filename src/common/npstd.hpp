@@ -14,7 +14,7 @@
 #include <complex>
 #include <type_traits>
 
-#include <numpy/npymath_common.h>
+#include "npymath_common.h"
 
 #include "npymath_config.h"
 

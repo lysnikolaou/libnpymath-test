@@ -2,8 +2,8 @@
 #define NPYMATH_CONFIG_H_
 
 #include "config.h"
-#include "numpy/npymathconfig.h"
-#include "numpy/utils.h"
+#include "npymathconfig.h"
+#include "utils.h"
 
 /* blocklist */
 

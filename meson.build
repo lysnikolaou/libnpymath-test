@@ -32,4 +32,4 @@ if not cc.has_header('Python.h', dependencies: py_dep)
   error('Cannot compile `Python.h`. Perhaps you need to install python-dev|python-devel')
 endif
 
-subdir('npymath')
+subdir('src')
