@@ -76,5 +76,5 @@
 #endif
 
 #ifndef NPYMATH_CONFIG_H_
-#error config.h should never be included directly, include npymath_config.h instead
+#error npymath_config.h should never be included directly, include npymath_config.h instead
 #endif

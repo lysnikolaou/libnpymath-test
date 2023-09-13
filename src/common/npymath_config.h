@@ -1,7 +1,7 @@
 #ifndef NPYMATH_CONFIG_H_
 #define NPYMATH_CONFIG_H_
 
-#include "config.h"
+#include "npymath_meson_config.h"
 #include "npymathconfig.h"
 #include "utils.h"
 

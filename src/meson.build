@@ -281,8 +281,8 @@ endif
 np_dir = py.get_install_dir() / 'numpy'
 
 config_h = configure_file(
-  input: 'config.h.in',
-  output: 'config.h',
+  input: 'npymath_meson_config.h.in',
+  output: 'npymath_meson_config.h',
   configuration: cdata,
   install: false
 )
