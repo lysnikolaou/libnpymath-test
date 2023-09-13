@@ -23,18 +23,6 @@ if is_mingw
   add_project_arguments('-D__USE_MINGW_ANSI_STDIO=1', language: ['c', 'cpp'])
 endif
 
-# We install libnpymath and libnpyrandom; ensure they're using a `.lib` rather
-# than a `.a` file extension in order not to break including them in a
-# distutils-based build (see gh-23981 and
-# https://mesonbuild.com/FAQ.html#why-does-building-my-project-with-msvc-output-static-libraries-called-libfooa)
-if is_windows and cc.get_id() == 'msvc'
-  name_prefix_staticlib = ''
-  name_suffix_staticlib = 'lib'
-else
-  name_prefix_staticlib = []
-  name_suffix_staticlib = []
-endif
-
 src_file_cli = find_program('../_build_utils/process_src_template.py')
 src_file = generator(src_file_cli,
   arguments : ['@INPUT@', '--outfile', '@OUTPUT@'],
@@ -303,8 +291,7 @@ _npymathconfig_h = configure_file(
   input: 'include/_npymathconfig.h.in',
   output: '_npymathconfig.h',
   configuration: cdata,
-  install: true,
-  install_dir: np_dir / 'core/include/numpy'
+  install: false,
 )
 
 # Build npymath static library
@@ -335,16 +322,18 @@ npymath_sources = [
   'halffloat.cpp',
   'npy_math.c',
 ]
-npymath_lib = static_library('npymath',
+npymath_includes = include_directories('include', '.', 'common')
+
+npymath_lib = shared_library('npymath',
   npymath_sources,
   c_args: staticlib_cflags,
   cpp_args: staticlib_cppflags,
-  include_directories: ['include', '.', 'common'],
+  include_directories: npymath_includes,
   dependencies: py_dep,
   install: true,
-  install_dir: np_dir / 'core/lib',
-  name_prefix: name_prefix_staticlib,
-  name_suffix: name_suffix_staticlib,
+  install_dir: np_dir / 'core' / 'lib',
 )
+
+npymath_dep = declare_dependency(include_directories: npymath_includes, link_with: npymath_lib)
 
 subdir('include')

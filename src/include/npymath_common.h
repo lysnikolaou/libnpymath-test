@@ -6,9 +6,6 @@
 
 /* numpconfig.h is auto-generated */
 #include "npymathconfig.h"
-#ifdef HAVE_NPY_CONFIG_H
-#include <npymath_config.h>
-#endif
 
 /*
  * using static inline modifiers when defining npy_math functions
