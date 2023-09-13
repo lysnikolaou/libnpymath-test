@@ -2,7 +2,7 @@
 #define NPYMATH_HALFFLOAT_H_
 
 #include <Python.h>
-#include "npy_math.h"
+#include "numpy/npy_math.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,4 +1,4 @@
 py.install_sources(
-  ['npy_math.h', 'halffloat.h'],
+  ['numpy' / 'npy_math.h', 'numpy' / 'halffloat.h'],
   subdir: 'numpy' / 'core' / 'include' / 'numpy'
 )

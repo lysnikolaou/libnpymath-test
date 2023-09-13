@@ -29,7 +29,7 @@ using std::isless;
 
 #include "npymath_fpmath.h"
 
-#include "npy_math.h"
+#include "numpy/npy_math.h"
 #include "npymath_endian.h"
 #include "npymath_common.h"
 
