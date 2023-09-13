@@ -2,7 +2,7 @@
  * vim:syntax=c
  * A small module to implement missing C99 math capabilities required by numpy
  *
- * Please keep this independent of python ! Only basic types (npy_longdouble)
+ * Please keep this independent of python ! Only basic types (npymath_longdouble)
  * can be used, otherwise, pure C, without any use of Python facilities
  *
  * How to add a function to this section
@@ -75,10 +75,10 @@
  * c = (T)(a * ((T)~(T)0/255)) >> (sizeof(T) - 1) * CHAR_BIT;
 */
 
-static const npy_uint8  MAGIC8[]  = {0x55u,                 0x33u,                 0x0Fu,                 0x01u};
-static const npy_uint16 MAGIC16[] = {0x5555u,               0x3333u,               0x0F0Fu,               0x0101u};
-static const npy_uint32 MAGIC32[] = {0x55555555ul,          0x33333333ul,          0x0F0F0F0Ful,          0x01010101ul};
-static const npy_uint64 MAGIC64[] = {0x5555555555555555ull, 0x3333333333333333ull, 0x0F0F0F0F0F0F0F0Full, 0x0101010101010101ull};
+static const npymath_uint8  MAGIC8[]  = {0x55u,                 0x33u,                 0x0Fu,                 0x01u};
+static const npymath_uint16 MAGIC16[] = {0x5555u,               0x3333u,               0x0F0Fu,               0x0101u};
+static const npymath_uint32 MAGIC32[] = {0x55555555ul,          0x33333333ul,          0x0F0F0F0Ful,          0x01010101ul};
+static const npymath_uint64 MAGIC64[] = {0x5555555555555555ull, 0x3333333333333333ull, 0x0F0F0F0F0F0F0F0Full, 0x0101010101010101ull};
 
 
 /*
@@ -141,8 +141,8 @@ NPY_INPLACE double npy_atan2(double y, double x)
 #ifndef NPY_BLOCK_ATAN2
     return atan2(y, x);
 #else
-    npy_int32 k, m, iy, ix, hx, hy;
-    npy_uint32 lx,ly;
+    npymath_int32 k, m, iy, ix, hx, hy;
+    npymath_uint32 lx,ly;
     double z;
 
     EXTRACT_WORDS(hx, lx, x);
@@ -277,7 +277,7 @@ NPY_INPLACE double npy_hypot(double x, double y)
  */
 
 /**begin repeat
- * #type = npy_longdouble, npy_double, npy_float#
+ * #type = npymath_longdouble, npymath_double, npymath_float#
  * #TYPE = LONGDOUBLE, DOUBLE, FLOAT#
  * #c = l,,f#
  * #C = L,,F#
@@ -321,7 +321,7 @@ NPY_INPLACE @type@ npy_@kind@@c@(@type@ x)
 /* Blocklist-able C99 functions */
 
 /**begin repeat
- * #type = npy_float,npy_longdouble#
+ * #type = npymath_float,npymath_longdouble#
  * #TYPE = FLOAT,LONGDOUBLE#
  * #c = f,l#
  * #C = F,L#
@@ -412,7 +412,7 @@ NPY_INPLACE @type@ npy_modf@c@(@type@ x, @type@ *iptr)
  */
 
 /**begin repeat
- * #type = npy_float, npy_double, npy_longdouble#
+ * #type = npymath_float, npymath_double, npymath_longdouble#
  * #TYPE = FLOAT, DOUBLE, LONGDOUBLE#
  * #c = f, ,l#
  * #C = F, ,L#
@@ -601,7 +601,7 @@ npy_divmod@c@(@type@ a, @type@ b, @type@ *modulus)
 
 /**begin repeat
  *
- * #type = npy_uint, npy_ulong, npy_ulonglong#
+ * #type = npymath_uint, npymath_ulong, npymath_ulonglong#
  * #c = u,ul,ull#
  */
 NPY_INPLACE @type@
@@ -626,7 +626,7 @@ npy_lcm@c@(@type@ a, @type@ b)
 
 /**begin repeat
  *
- * #type = (npy_int, npy_long, npy_longlong)*2#
+ * #type = (npymath_int, npymath_long, npymath_longlong)*2#
  * #c = (,l,ll)*2#
  * #func=gcd*3,lcm*3#
  */
@@ -650,8 +650,8 @@ npy_@func@@c@(@type@ a, @type@ b)
  * #u         = u,#
  * #is_signed = 0,1#
  */
-NPY_INPLACE npy_@u@@type@
-npy_lshift@u@@c@(npy_@u@@type@ a, npy_@u@@type@ b)
+NPY_INPLACE npymath_@u@@type@
+npy_lshift@u@@c@(npymath_@u@@type@ a, npymath_@u@@type@ b)
 {
     if (NPYMATH_LIKELY((size_t)b < sizeof(a) * CHAR_BIT)) {
         return a << b;
@@ -660,15 +660,15 @@ npy_lshift@u@@c@(npy_@u@@type@ a, npy_@u@@type@ b)
         return 0;
     }
 }
-NPY_INPLACE npy_@u@@type@
-npy_rshift@u@@c@(npy_@u@@type@ a, npy_@u@@type@ b)
+NPY_INPLACE npymath_@u@@type@
+npy_rshift@u@@c@(npymath_@u@@type@ a, npymath_@u@@type@ b)
 {
     if (NPYMATH_LIKELY((size_t)b < sizeof(a) * CHAR_BIT)) {
         return a >> b;
     }
 #if @is_signed@
     else if (a < 0) {
-        return (npy_@u@@type@)-1;  /* preserve the sign bit */
+        return (npymath_@u@@type@)-1;  /* preserve the sign bit */
     }
 #endif
     else {
@@ -698,16 +698,16 @@ npy_rshift@u@@c@(npy_@u@@type@ a, npy_@u@@type@ b)
 
 
 NPY_INPLACE uint8_t
-npy_popcount_parallel@c@(npy_@type@ a)
+npy_popcount_parallel@c@(npymath_@type@ a)
 {
-    a = a - ((a >> 1) & (npy_@type@) TO_BITS_LEN(MAGIC)[0]);
-    a = ((a & (npy_@type@) TO_BITS_LEN(MAGIC)[1])) + ((a >> 2) & (npy_@type@) TO_BITS_LEN(MAGIC)[1]);
-    a = (a + (a >> 4)) & (npy_@type@) TO_BITS_LEN(MAGIC)[2];
-    return (npy_@type@) (a * (npy_@type@) TO_BITS_LEN(MAGIC)[3]) >> ((NPYMATH_SIZEOF_@STYPE@ - 1) * CHAR_BIT);
+    a = a - ((a >> 1) & (npymath_@type@) TO_BITS_LEN(MAGIC)[0]);
+    a = ((a & (npymath_@type@) TO_BITS_LEN(MAGIC)[1])) + ((a >> 2) & (npymath_@type@) TO_BITS_LEN(MAGIC)[1]);
+    a = (a + (a >> 4)) & (npymath_@type@) TO_BITS_LEN(MAGIC)[2];
+    return (npymath_@type@) (a * (npymath_@type@) TO_BITS_LEN(MAGIC)[3]) >> ((NPYMATH_SIZEOF_@STYPE@ - 1) * CHAR_BIT);
 }
 
 NPY_INPLACE uint8_t
-npy_popcountu@c@(npy_@type@ a)
+npy_popcountu@c@(npymath_@type@ a)
 {
 /* use built-in popcount if present, else use our implementation */
 #if (defined(__clang__) || defined(__GNUC__)) && NPYMATH_BITSOF_@STYPE@ >= 32
@@ -718,8 +718,8 @@ npy_popcountu@c@(npy_@type@ a)
         return TO_BITS_LEN(__popcnt)(a);
     /* split 64 bit number into two 32 bit ints and return sum of counts */
     #elif (defined(_WIN32) && NPYMATH_BITSOF_@STYPE@ == 64)
-        npy_uint32 left  = (npy_uint32) (a>>32);
-        npy_uint32 right = (npy_uint32) a;
+        npymath_uint32 left  = (npymath_uint32) (a>>32);
+        npymath_uint32 right = (npymath_uint32) a;
         return __popcnt32(left) + __popcnt32(right);
     #endif
 #else
@@ -734,7 +734,7 @@ npy_popcountu@c@(npy_@type@ a)
  * #c    = hh,   h,     ,    l,    ll#
  */
 NPY_INPLACE uint8_t
-npy_popcount@c@(npy_@type@ a)
+npy_popcount@c@(npymath_@type@ a)
 {
     /* Return popcount of abs(a) */
     return npy_popcountu@c@(a < 0 ? -a : a);

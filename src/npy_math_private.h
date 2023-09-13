@@ -62,8 +62,8 @@ typedef union
   double value;
   struct
   {
-    npy_uint32 msw;
-    npy_uint32 lsw;
+    npymath_uint32 msw;
+    npymath_uint32 lsw;
   } parts;
 } ieee_double_shape_type;
 
@@ -76,8 +76,8 @@ typedef union
   double value;
   struct
   {
-    npy_uint32 lsw;
-    npy_uint32 msw;
+    npymath_uint32 lsw;
+    npymath_uint32 msw;
   } parts;
 } ieee_double_shape_type;
 
@@ -150,7 +150,7 @@ typedef union
 {
   float value;
   /* FIXME: Assumes 32 bit int.  */
-  npy_uint32 word;
+  npymath_uint32 word;
 } ieee_float_shape_type;
 
 /* Get a 32 bit int from a float.  */
@@ -183,11 +183,11 @@ do {                                                            \
      *
      * 16 stronger bits of a[2] are junk
      */
-    typedef npy_uint32 IEEEl2bitsrep_part;
+    typedef npymath_uint32 IEEEl2bitsrep_part;
 
 
     union IEEEl2bitsrep {
-        npy_longdouble     e;
+        npymath_longdouble     e;
         IEEEl2bitsrep_part a[3];
     };
 
@@ -209,9 +209,9 @@ do {                                                            \
 
     #define LDBL_NBIT           0x80000000
 
-    typedef npy_uint32 ldouble_man_t;
-    typedef npy_uint32 ldouble_exp_t;
-    typedef npy_uint32 ldouble_sign_t;
+    typedef npymath_uint32 ldouble_man_t;
+    typedef npymath_uint32 ldouble_exp_t;
+    typedef npymath_uint32 ldouble_sign_t;
 #elif defined(HAVE_LDOUBLE_INTEL_EXTENDED_16_BYTES_LE)
     /*
      * Intel extended 80 bits precision, 16 bytes alignment.. Bit representation is
@@ -221,10 +221,10 @@ do {                                                            \
      *
      * a[3] and 16 stronger bits of a[2] are junk
      */
-    typedef npy_uint32 IEEEl2bitsrep_part;
+    typedef npymath_uint32 IEEEl2bitsrep_part;
 
     union IEEEl2bitsrep {
-        npy_longdouble     e;
+        npymath_longdouble     e;
         IEEEl2bitsrep_part a[4];
     };
 
@@ -246,9 +246,9 @@ do {                                                            \
 
     #define LDBL_NBIT           0x800000000
 
-    typedef npy_uint32 ldouble_man_t;
-    typedef npy_uint32 ldouble_exp_t;
-    typedef npy_uint32 ldouble_sign_t;
+    typedef npymath_uint32 ldouble_man_t;
+    typedef npymath_uint32 ldouble_exp_t;
+    typedef npymath_uint32 ldouble_sign_t;
 #elif defined(HAVE_LDOUBLE_MOTOROLA_EXTENDED_12_BYTES_BE)
     /*
      * Motorola extended 80 bits precision. Bit representation is
@@ -258,11 +258,11 @@ do {                                                            \
      *
      * 16 low bits of a[0] are junk
      */
-    typedef npy_uint32 IEEEl2bitsrep_part;
+    typedef npymath_uint32 IEEEl2bitsrep_part;
 
 
     union IEEEl2bitsrep {
-        npy_longdouble     e;
+        npymath_longdouble     e;
         IEEEl2bitsrep_part a[3];
     };
 
@@ -284,9 +284,9 @@ do {                                                            \
 
     #define LDBL_NBIT           0x80000000
 
-    typedef npy_uint32 ldouble_man_t;
-    typedef npy_uint32 ldouble_exp_t;
-    typedef npy_uint32 ldouble_sign_t;
+    typedef npymath_uint32 ldouble_man_t;
+    typedef npymath_uint32 ldouble_exp_t;
+    typedef npymath_uint32 ldouble_sign_t;
 #elif defined(HAVE_LDOUBLE_IEEE_DOUBLE_BE)
     /* 64 bits IEEE double precision aligned on 16 bytes: used by ppc arch on
      * Mac OS X */
@@ -297,10 +297,10 @@ do {                                                            \
      *          |1 bit|  11 bits  |            52 bits            |
      *          |          a[0]         |         a[1]            |
      */
-    typedef npy_uint32 IEEEl2bitsrep_part;
+    typedef npymath_uint32 IEEEl2bitsrep_part;
 
     union IEEEl2bitsrep {
-        npy_longdouble     e;
+        npymath_longdouble     e;
         IEEEl2bitsrep_part a[2];
     };
 
@@ -322,9 +322,9 @@ do {                                                            \
 
     #define LDBL_NBIT           0
 
-    typedef npy_uint32 ldouble_man_t;
-    typedef npy_uint32 ldouble_exp_t;
-    typedef npy_uint32 ldouble_sign_t;
+    typedef npymath_uint32 ldouble_man_t;
+    typedef npymath_uint32 ldouble_exp_t;
+    typedef npymath_uint32 ldouble_sign_t;
 #elif defined(HAVE_LDOUBLE_IEEE_DOUBLE_LE)
     /* 64 bits IEEE double precision, Little Endian. */
 
@@ -334,10 +334,10 @@ do {                                                            \
      *          |1 bit|  11 bits  |            52 bits            |
      *          |          a[1]         |         a[0]            |
      */
-    typedef npy_uint32 IEEEl2bitsrep_part;
+    typedef npymath_uint32 IEEEl2bitsrep_part;
 
     union IEEEl2bitsrep {
-        npy_longdouble     e;
+        npymath_longdouble     e;
         IEEEl2bitsrep_part a[2];
     };
 
@@ -359,9 +359,9 @@ do {                                                            \
 
     #define LDBL_NBIT           0x00000080
 
-    typedef npy_uint32 ldouble_man_t;
-    typedef npy_uint32 ldouble_exp_t;
-    typedef npy_uint32 ldouble_sign_t;
+    typedef npymath_uint32 ldouble_man_t;
+    typedef npymath_uint32 ldouble_exp_t;
+    typedef npymath_uint32 ldouble_sign_t;
 #elif defined(HAVE_LDOUBLE_IEEE_QUAD_BE)
     /*
      * IEEE quad precision, Big Endian. Bit representation is
@@ -369,10 +369,10 @@ do {                                                            \
      *          |1 bit|  15 bits  |            112 bits           |
      *          |          a[0]         |           a[1]          |
      */
-    typedef npy_uint64 IEEEl2bitsrep_part;
+    typedef npymath_uint64 IEEEl2bitsrep_part;
 
     union IEEEl2bitsrep {
-        npy_longdouble     e;
+        npymath_longdouble     e;
         IEEEl2bitsrep_part a[2];
     };
 
@@ -394,9 +394,9 @@ do {                                                            \
 
     #define LDBL_NBIT           0
 
-    typedef npy_uint64 ldouble_man_t;
-    typedef npy_uint64 ldouble_exp_t;
-    typedef npy_uint32 ldouble_sign_t;
+    typedef npymath_uint64 ldouble_man_t;
+    typedef npymath_uint64 ldouble_exp_t;
+    typedef npymath_uint32 ldouble_sign_t;
 #elif defined(HAVE_LDOUBLE_IEEE_QUAD_LE)
     /*
      * IEEE quad precision, Little Endian. Bit representation is
@@ -404,10 +404,10 @@ do {                                                            \
      *          |1 bit|  15 bits  |            112 bits           |
      *          |          a[1]         |           a[0]          |
      */
-    typedef npy_uint64 IEEEl2bitsrep_part;
+    typedef npymath_uint64 IEEEl2bitsrep_part;
 
     union IEEEl2bitsrep {
-        npy_longdouble     e;
+        npymath_longdouble     e;
         IEEEl2bitsrep_part a[2];
     };
 
@@ -429,9 +429,9 @@ do {                                                            \
 
     #define LDBL_NBIT           0
 
-    typedef npy_uint64 ldouble_man_t;
-    typedef npy_uint64 ldouble_exp_t;
-    typedef npy_uint32 ldouble_sign_t;
+    typedef npymath_uint64 ldouble_man_t;
+    typedef npymath_uint64 ldouble_exp_t;
+    typedef npymath_uint32 ldouble_sign_t;
 #endif
 
 #if !defined(HAVE_LDOUBLE_IBM_DOUBLE_DOUBLE_BE) && \

@@ -29,8 +29,8 @@ static double
 _next(double x, int p)
 {
     volatile double t;
-    npy_int32 hx, hy, ix;
-    npy_uint32 lx;
+    npymath_int32 hx, hy, ix;
+    npymath_uint32 lx;
 
     EXTRACT_WORDS(hx, lx, x);
     ix = hx & 0x7fffffff; /* |x| */
@@ -78,7 +78,7 @@ static float
 _next(float x, int p)
 {
     volatile float t;
-    npy_int32 hx, hy, ix;
+    npymath_int32 hx, hy, ix;
 
     GET_FLOAT_WORD(hx, x);
     ix = hx & 0x7fffffff; /* |x| */
@@ -135,13 +135,13 @@ _next(float x, int p)
 
 /* only works for big endian */
 typedef union {
-    npy_longdouble value;
+    npymath_longdouble value;
     struct {
-        npy_uint64 msw;
-        npy_uint64 lsw;
+        npymath_uint64 msw;
+        npymath_uint64 lsw;
     } parts64;
     struct {
-        npy_uint32 w0, w1, w2, w3;
+        npymath_uint32 w0, w1, w2, w3;
     } parts32;
 } ieee854_long_double_shape_type;
 
@@ -168,10 +168,10 @@ typedef union {
 static long double
 _next(long double x, int p)
 {
-    npy_int64 hx, ihx, ilx;
-    npy_uint64 lx;
-    npy_longdouble u;
-    const npy_longdouble eps = exp2l(-105.); // 0x1.0000000000000p-105L
+    npymath_int64 hx, ihx, ilx;
+    npymath_uint64 lx;
+    npymath_longdouble u;
+    const npymath_longdouble eps = exp2l(-105.); // 0x1.0000000000000p-105L
 
     GET_LDOUBLE_WORDS64(hx, lx, x);
     ihx = hx & 0x7fffffffffffffffLL; /* |hx| */
@@ -202,8 +202,8 @@ _next(long double x, int p)
         if (ihx <= 0x0360000000000000LL) { /* x <= LDBL_MIN */
             u = math_opt_barrier(x);
             x -= LDBL_TRUE_MIN;
-            if (ihx < 0x0360000000000000LL || (hx > 0 && (npy_int64)lx <= 0) ||
-                (hx < 0 && (npy_int64)lx > 1)) {
+            if (ihx < 0x0360000000000000LL || (hx > 0 && (npymath_int64)lx <= 0) ||
+                (hx < 0 && (npymath_int64)lx > 1)) {
                 u = u * u;
                 math_force_eval(u); /* raise underflow flag */
             }
@@ -222,7 +222,7 @@ _next(long double x, int p)
     else { /* p >= 0, x += ulp */
         if ((hx == 0x7fefffffffffffffLL) && (lx == 0x7c8ffffffffffffeLL))
             return x + x; /* overflow, return +inf */
-        if ((npy_uint64)hx >= 0xfff0000000000000ULL) {
+        if ((npymath_uint64)hx >= 0xfff0000000000000ULL) {
             SET_LDOUBLE_WORDS64(u, 0xffefffffffffffffLL, 0xfc8ffffffffffffeLL);
             return u;
         }
@@ -230,8 +230,8 @@ _next(long double x, int p)
             u = math_opt_barrier(x);
             x += LDBL_TRUE_MIN;
             if (ihx < 0x0360000000000000LL ||
-                (hx > 0 && (npy_int64)lx < 0 && lx != 0x8000000000000001LL) ||
-                (hx < 0 && (npy_int64)lx >= 0)) {
+                (hx > 0 && (npymath_int64)lx < 0 && lx != 0x8000000000000001LL) ||
+                (hx < 0 && (npymath_int64)lx >= 0)) {
                 u = u * u;
                 math_force_eval(u); /* raise underflow flag */
             }
@@ -254,7 +254,7 @@ _next(long double x, int p)
 static long double
 _next(long double x, int p)
 {
-    volatile npy_longdouble t;
+    volatile npymath_longdouble t;
     union IEEEl2bitsrep ux;
 
     ux.e = x;
@@ -323,21 +323,21 @@ struct numeric_limits;
 
 template <>
 struct numeric_limits<float> {
-    static const npy_float nan;
+    static const npymath_float nan;
 };
-const npy_float numeric_limits<float>::nan = NPY_NANF;
+const npymath_float numeric_limits<float>::nan = NPY_NANF;
 
 template <>
 struct numeric_limits<double> {
-    static const npy_double nan;
+    static const npymath_double nan;
 };
-const npy_double numeric_limits<double>::nan = NPY_NAN;
+const npymath_double numeric_limits<double>::nan = NPY_NAN;
 
 template <>
 struct numeric_limits<long double> {
-    static const npy_longdouble nan;
+    static const npymath_longdouble nan;
 };
-const npy_longdouble numeric_limits<long double>::nan = NPY_NANL;
+const npymath_longdouble numeric_limits<long double>::nan = NPY_NANL;
 }  // namespace
 
 template <typename type>
@@ -356,18 +356,18 @@ _npy_spacing(type x)
  * Instantiation of C interface
  */
 extern "C" {
-npy_float
-npy_spacingf(npy_float x)
+npymath_float
+npy_spacingf(npymath_float x)
 {
     return _npy_spacing(x);
 }
-npy_double
-npy_spacing(npy_double x)
+npymath_double
+npy_spacing(npymath_double x)
 {
     return _npy_spacing(x);
 }
-npy_longdouble
-npy_spacingl(npy_longdouble x)
+npymath_longdouble
+npy_spacingl(npymath_longdouble x)
 {
     return _npy_spacing(x);
 }

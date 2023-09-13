@@ -17,56 +17,56 @@
  */
 using namespace npymath;
 
-float npy_half_to_float(npy_half h)
+float npy_half_to_float(npymath_half h)
 {
     return static_cast<float>(Half::FromBits(h));
 }
 
-double npy_half_to_double(npy_half h)
+double npy_half_to_double(npymath_half h)
 {
     return static_cast<double>(Half::FromBits(h));
 }
 
-npy_half npy_float_to_half(float f)
+npymath_half npy_float_to_half(float f)
 {
     return Half(f).Bits();
 }
 
-npy_half npy_double_to_half(double d)
+npymath_half npy_double_to_half(double d)
 {
     return Half(d).Bits();
 }
 
-int npy_half_iszero(npy_half h)
+int npy_half_iszero(npymath_half h)
 {
     return (h&0x7fff) == 0;
 }
 
-int npy_half_isnan(npy_half h)
+int npy_half_isnan(npymath_half h)
 {
     return Half::FromBits(h).IsNaN();
 }
 
-int npy_half_isinf(npy_half h)
+int npy_half_isinf(npymath_half h)
 {
     return ((h&0x7fffu) == 0x7c00u);
 }
 
-int npy_half_isfinite(npy_half h)
+int npy_half_isfinite(npymath_half h)
 {
     return ((h&0x7c00u) != 0x7c00u);
 }
 
-int npy_half_signbit(npy_half h)
+int npy_half_signbit(npymath_half h)
 {
     return (h&0x8000u) != 0;
 }
 
-npy_half npy_half_spacing(npy_half h)
+npymath_half npy_half_spacing(npymath_half h)
 {
-    npy_half ret;
-    npy_uint16 h_exp = h&0x7c00u;
-    npy_uint16 h_sig = h&0x03ffu;
+    npymath_half ret;
+    npymath_uint16 h_exp = h&0x7c00u;
+    npymath_uint16 h_sig = h&0x03ffu;
     if (h_exp == 0x7c00u) {
 #if NPY_HALF_GENERATE_INVALID
         npy_set_floatstatus_invalid();
@@ -96,14 +96,14 @@ npy_half npy_half_spacing(npy_half h)
     return ret;
 }
 
-npy_half npy_half_copysign(npy_half x, npy_half y)
+npymath_half npy_half_copysign(npymath_half x, npymath_half y)
 {
     return (x&0x7fffu) | (y&0x8000u);
 }
 
-npy_half npy_half_nextafter(npy_half x, npy_half y)
+npymath_half npy_half_nextafter(npymath_half x, npymath_half y)
 {
-    npy_half ret;
+    npymath_half ret;
 
     if (npy_half_isnan(x) || npy_half_isnan(y)) {
         ret = NPY_HALF_NAN;
@@ -112,7 +112,7 @@ npy_half npy_half_nextafter(npy_half x, npy_half y)
     } else if (npy_half_iszero(x)) {
         ret = (y&0x8000u) + 1; /* Smallest subnormal half */
     } else if (!(x&0x8000u)) { /* x > 0 */
-        if ((npy_int16)x > (npy_int16)y) { /* x > y */
+        if ((npymath_int16)x > (npymath_int16)y) { /* x > y */
             ret = x-1;
         } else {
             ret = x+1;
@@ -133,52 +133,52 @@ npy_half npy_half_nextafter(npy_half x, npy_half y)
     return ret;
 }
 
-int npy_half_eq_nonan(npy_half h1, npy_half h2)
+int npy_half_eq_nonan(npymath_half h1, npymath_half h2)
 {
     return Half::FromBits(h1).Equal(Half::FromBits(h2));
 }
 
-int npy_half_eq(npy_half h1, npy_half h2)
+int npy_half_eq(npymath_half h1, npymath_half h2)
 {
     return Half::FromBits(h1) == Half::FromBits(h2);
 }
 
-int npy_half_ne(npy_half h1, npy_half h2)
+int npy_half_ne(npymath_half h1, npymath_half h2)
 {
     return Half::FromBits(h1) != Half::FromBits(h2);
 }
 
-int npy_half_lt_nonan(npy_half h1, npy_half h2)
+int npy_half_lt_nonan(npymath_half h1, npymath_half h2)
 {
     return Half::FromBits(h1).Less(Half::FromBits(h2));
 }
 
-int npy_half_lt(npy_half h1, npy_half h2)
+int npy_half_lt(npymath_half h1, npymath_half h2)
 {
     return Half::FromBits(h1) < Half::FromBits(h2);
 }
 
-int npy_half_gt(npy_half h1, npy_half h2)
+int npy_half_gt(npymath_half h1, npymath_half h2)
 {
     return npy_half_lt(h2, h1);
 }
 
-int npy_half_le_nonan(npy_half h1, npy_half h2)
+int npy_half_le_nonan(npymath_half h1, npymath_half h2)
 {
     return Half::FromBits(h1).LessEqual(Half::FromBits(h2));
 }
 
-int npy_half_le(npy_half h1, npy_half h2)
+int npy_half_le(npymath_half h1, npymath_half h2)
 {
     return Half::FromBits(h1) <= Half::FromBits(h2);
 }
 
-int npy_half_ge(npy_half h1, npy_half h2)
+int npy_half_ge(npymath_half h1, npymath_half h2)
 {
     return npy_half_le(h2, h1);
 }
 
-npy_half npy_half_divmod(npy_half h1, npy_half h2, npy_half *modulus)
+npymath_half npy_half_divmod(npymath_half h1, npymath_half h2, npymath_half *modulus)
 {
     float fh1 = npy_half_to_float(h1);
     float fh2 = npy_half_to_float(h2);
@@ -196,7 +196,7 @@ npy_half npy_half_divmod(npy_half h1, npy_half h2, npy_half *modulus)
  ********************************************************************
  */
 
-npy_uint16 npy_floatbits_to_halfbits(npy_uint32 f)
+npymath_uint16 npy_floatbits_to_halfbits(npymath_uint32 f)
 {
     if constexpr (Half::kNativeConversion<float>) {
         return BitCast<uint16_t>(Half(BitCast<float>(f)));
@@ -206,7 +206,7 @@ npy_uint16 npy_floatbits_to_halfbits(npy_uint32 f)
     }
 }
 
-npy_uint16 npy_doublebits_to_halfbits(npy_uint64 d)
+npymath_uint16 npy_doublebits_to_halfbits(npymath_uint64 d)
 {
     if constexpr (Half::kNativeConversion<double>) {
         return BitCast<uint16_t>(Half(BitCast<double>(d)));
@@ -216,7 +216,7 @@ npy_uint16 npy_doublebits_to_halfbits(npy_uint64 d)
     }
 }
 
-npy_uint32 npy_halfbits_to_floatbits(npy_uint16 h)
+npymath_uint32 npy_halfbits_to_floatbits(npymath_uint16 h)
 {
     if constexpr (Half::kNativeConversion<float>) {
         return BitCast<uint32_t>(static_cast<float>(Half::FromBits(h)));
@@ -226,7 +226,7 @@ npy_uint32 npy_halfbits_to_floatbits(npy_uint16 h)
     }
 }
 
-npy_uint64 npy_halfbits_to_doublebits(npy_uint16 h)
+npymath_uint64 npy_halfbits_to_doublebits(npymath_uint16 h)
 {
     if constexpr (Half::kNativeConversion<double>) {
         return BitCast<uint64_t>(static_cast<double>(Half::FromBits(h)));

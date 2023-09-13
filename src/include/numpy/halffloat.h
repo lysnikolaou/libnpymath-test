@@ -13,31 +13,31 @@ extern "C" {
  */
 
 /* Conversions */
-float npy_half_to_float(npy_half h);
-double npy_half_to_double(npy_half h);
-npy_half npy_float_to_half(float f);
-npy_half npy_double_to_half(double d);
+float npy_half_to_float(npymath_half h);
+double npy_half_to_double(npymath_half h);
+npymath_half npy_float_to_half(float f);
+npymath_half npy_double_to_half(double d);
 /* Comparisons */
-int npy_half_eq(npy_half h1, npy_half h2);
-int npy_half_ne(npy_half h1, npy_half h2);
-int npy_half_le(npy_half h1, npy_half h2);
-int npy_half_lt(npy_half h1, npy_half h2);
-int npy_half_ge(npy_half h1, npy_half h2);
-int npy_half_gt(npy_half h1, npy_half h2);
+int npy_half_eq(npymath_half h1, npymath_half h2);
+int npy_half_ne(npymath_half h1, npymath_half h2);
+int npy_half_le(npymath_half h1, npymath_half h2);
+int npy_half_lt(npymath_half h1, npymath_half h2);
+int npy_half_ge(npymath_half h1, npymath_half h2);
+int npy_half_gt(npymath_half h1, npymath_half h2);
 /* faster *_nonan variants for when you know h1 and h2 are not NaN */
-int npy_half_eq_nonan(npy_half h1, npy_half h2);
-int npy_half_lt_nonan(npy_half h1, npy_half h2);
-int npy_half_le_nonan(npy_half h1, npy_half h2);
+int npy_half_eq_nonan(npymath_half h1, npymath_half h2);
+int npy_half_lt_nonan(npymath_half h1, npymath_half h2);
+int npy_half_le_nonan(npymath_half h1, npymath_half h2);
 /* Miscellaneous functions */
-int npy_half_iszero(npy_half h);
-int npy_half_isnan(npy_half h);
-int npy_half_isinf(npy_half h);
-int npy_half_isfinite(npy_half h);
-int npy_half_signbit(npy_half h);
-npy_half npy_half_copysign(npy_half x, npy_half y);
-npy_half npy_half_spacing(npy_half h);
-npy_half npy_half_nextafter(npy_half x, npy_half y);
-npy_half npy_half_divmod(npy_half x, npy_half y, npy_half *modulus);
+int npy_half_iszero(npymath_half h);
+int npy_half_isnan(npymath_half h);
+int npy_half_isinf(npymath_half h);
+int npy_half_isfinite(npymath_half h);
+int npy_half_signbit(npymath_half h);
+npymath_half npy_half_copysign(npymath_half x, npymath_half y);
+npymath_half npy_half_spacing(npymath_half h);
+npymath_half npy_half_nextafter(npymath_half x, npymath_half y);
+npymath_half npy_half_divmod(npymath_half x, npymath_half y, npymath_half *modulus);
 
 /*
  * Half-precision constants
@@ -58,10 +58,10 @@ npy_half npy_half_divmod(npy_half x, npy_half y, npy_half *modulus);
  * Bit-level conversions
  */
 
-npy_uint16 npy_floatbits_to_halfbits(npy_uint32 f);
-npy_uint16 npy_doublebits_to_halfbits(npy_uint64 d);
-npy_uint32 npy_halfbits_to_floatbits(npy_uint16 h);
-npy_uint64 npy_halfbits_to_doublebits(npy_uint16 h);
+npymath_uint16 npy_floatbits_to_halfbits(npymath_uint32 f);
+npymath_uint16 npy_doublebits_to_halfbits(npymath_uint64 d);
+npymath_uint32 npy_halfbits_to_floatbits(npymath_uint16 h);
+npymath_uint64 npy_halfbits_to_doublebits(npymath_uint16 h);
 
 #ifdef __cplusplus
 }

@@ -42,16 +42,16 @@
  */
 #if !defined(HAVE_CACOSF) || !defined(HAVE_CACOSL) || !defined(HAVE_CASINHF) || !defined(HAVE_CASINHL)
 #define raise_inexact() do {                        \
-    volatile npy_float NPYMATH_UNUSED(junk) = 1 + tiny; \
+    volatile npymath_float NPYMATH_UNUSED(junk) = 1 + tiny; \
 } while (0)
 
 
-static const volatile npy_float tiny = 3.9443045e-31f;
+static const volatile npymath_float tiny = 3.9443045e-31f;
 #endif
 
 /**begin repeat
- * #type = npy_float, npy_double, npy_longdouble#
- * #ctype = npy_cfloat,npy_cdouble,npy_clongdouble#
+ * #type = npymath_float, npymath_double, npymath_longdouble#
+ * #ctype = npymath_cfloat,npymath_cdouble,npymath_clongdouble#
  * #c = f, , l#
  * #C = F, , L#
  * #NAME = CFLOAT, CDOUBLE, CLONGDOUBLE#
@@ -167,20 +167,20 @@ npy_carg@c@(@ctype@ z)
 
 static
 @ctype@
-_npy_scaled_cexp@c@(@type@ x, @type@ y, npy_int expt)
+_npy_scaled_cexp@c@(@type@ x, @type@ y, npymath_int expt)
 {
 #if @precision@ == 1
-    const npy_int k = 235;
+    const npymath_int k = 235;
 #endif
 #if @precision@ == 2
-    const npy_int k = 1799;
+    const npymath_int k = 1799;
 #endif
 #if @precision@ == 3
-    const npy_int k = 19547;
+    const npymath_int k = 19547;
 #endif
     const @type@ kln2 = k * NPY_LOGE2@c@;
     @type@ mant, mantcos, mantsin;
-    npy_int ex, excos, exsin;
+    npymath_int ex, excos, exsin;
 
     mant = npy_frexp@c@(npy_exp@c@(x - kln2), &ex);
     mantcos = npy_frexp@c@(npy_cos@c@(y), &excos);
@@ -435,7 +435,7 @@ sys_cpow@c@(@ctype@ x, @ctype@ y)
 @ctype@
 npy_cpow@c@ (@ctype@ a, @ctype@ b)
 {
-    npy_intp n;
+    Py_intptr_t n;
     @type@ ar = npy_creal@c@(a);
     @type@ br = npy_creal@c@(b);
     @type@ ai = npy_cimag@c@(a);
@@ -480,7 +480,7 @@ npy_cpow@c@ (@ctype@ a, @ctype@ b)
           r = npy_cpack@c@(NPY_NAN@C@, NPY_NAN@C@);
           return r;
     }
-    if (bi == 0 && br > -100 && br < 100 && (n=(npy_intp)br) == br) {
+    if (bi == 0 && br > -100 && br < 100 && (n=(Py_intptr_t)br) == br) {
         if (n == 1) {
             /* unroll: handle inf better */
             return npy_cpack@c@(ar, ai);
@@ -495,7 +495,7 @@ npy_cpow@c@ (@ctype@ a, @ctype@ b)
         }
         else if (n > -100 && n < 100) {
             @ctype@ p, aa;
-            npy_intp mask = 1;
+            Py_intptr_t mask = 1;
             if (n < 0) {
                 n = -n;
             }
@@ -584,25 +584,25 @@ npy_ctan@c@(@ctype@ z)
 npy_ccosh@c@(@ctype@ z)
 {
 #if @precision@ == 1
-    const npy_float CCOSH_BIG = 9.0f;
-    const npy_float CCOSH_HUGE = 1.70141183e+38f;
+    const npymath_float CCOSH_BIG = 9.0f;
+    const npymath_float CCOSH_HUGE = 1.70141183e+38f;
 #endif
 #if @precision@ == 2
-    const npy_double CCOSH_BIG = 22.0;
-    const npy_double CCOSH_HUGE = 8.9884656743115795e+307;
+    const npymath_double CCOSH_BIG = 22.0;
+    const npymath_double CCOSH_HUGE = 8.9884656743115795e+307;
 #endif
 #if @precision@ >= 3
 #if NPYMATH_SIZEOF_LONGDOUBLE == NPYMATH_SIZEOF_DOUBLE
-    const npy_longdouble CCOSH_BIG = 22.0L;
-    const npy_longdouble CCOSH_HUGE = 8.9884656743115795e+307L;
+    const npymath_longdouble CCOSH_BIG = 22.0L;
+    const npymath_longdouble CCOSH_HUGE = 8.9884656743115795e+307L;
 #else
-    const npy_longdouble CCOSH_BIG = 24.0L;
-    const npy_longdouble CCOSH_HUGE = 5.94865747678615882543e+4931L;
+    const npymath_longdouble CCOSH_BIG = 24.0L;
+    const npymath_longdouble CCOSH_HUGE = 5.94865747678615882543e+4931L;
 #endif
 #endif
 
     @type@  x, y, h, absx;
-    npy_int xfinite, yfinite;
+    npymath_int xfinite, yfinite;
 
     x = npy_creal@c@(z);
     y = npy_cimag@c@(z);
@@ -726,25 +726,25 @@ npy_ccosh@c@(@ctype@ z)
 npy_csinh@c@(@ctype@ z)
 {
 #if @precision@ == 1
-    const npy_float CSINH_BIG = 9.0f;
-    const npy_float CSINH_HUGE = 1.70141183e+38f;
+    const npymath_float CSINH_BIG = 9.0f;
+    const npymath_float CSINH_HUGE = 1.70141183e+38f;
 #endif
 #if @precision@ == 2
-    const npy_double CSINH_BIG = 22.0;
-    const npy_double CSINH_HUGE = 8.9884656743115795e+307;
+    const npymath_double CSINH_BIG = 22.0;
+    const npymath_double CSINH_HUGE = 8.9884656743115795e+307;
 #endif
 #if @precision@ >= 3
 #if NPYMATH_SIZEOF_LONGDOUBLE == NPYMATH_SIZEOF_DOUBLE
-    const npy_longdouble CSINH_BIG = 22.0L;
-    const npy_longdouble CSINH_HUGE = 8.9884656743115795e+307L;
+    const npymath_longdouble CSINH_BIG = 22.0L;
+    const npymath_longdouble CSINH_HUGE = 8.9884656743115795e+307L;
 #else
-    const npy_longdouble CSINH_BIG = 24.0L;
-    const npy_longdouble CSINH_HUGE = 5.94865747678615882543e+4931L;
+    const npymath_longdouble CSINH_BIG = 24.0L;
+    const npymath_longdouble CSINH_HUGE = 5.94865747678615882543e+4931L;
 #endif
 #endif
 
     @type@ x, y, h, absx;
-    npy_int xfinite, yfinite;
+    npymath_int xfinite, yfinite;
 
     x = npy_creal@c@(z);
     y = npy_cimag@c@(z);
@@ -1047,25 +1047,25 @@ _f@c@(@type@ a, @type@ b, @type@ hypot_a_b)
  */
 static inline void
 _do_hard_work@c@(@type@ x, @type@ y, @type@ *rx,
-    npy_int *B_is_usable, @type@ *B, @type@ *sqrt_A2my2, @type@ *new_y)
+    npymath_int *B_is_usable, @type@ *B, @type@ *sqrt_A2my2, @type@ *new_y)
 {
 #if @precision@ == 1
-    const npy_float A_crossover = 10.0f;
-    const npy_float B_crossover = 0.6417f;
-    const npy_float FOUR_SQRT_MIN = 4.3368086899420177e-19f;
+    const npymath_float A_crossover = 10.0f;
+    const npymath_float B_crossover = 0.6417f;
+    const npymath_float FOUR_SQRT_MIN = 4.3368086899420177e-19f;
 #endif
 #if @precision@ == 2
-    const npy_double A_crossover = 10.0;
-    const npy_double B_crossover = 0.6417;
-    const npy_double FOUR_SQRT_MIN = 5.9666725849601654e-154;
+    const npymath_double A_crossover = 10.0;
+    const npymath_double B_crossover = 0.6417;
+    const npymath_double FOUR_SQRT_MIN = 5.9666725849601654e-154;
 #endif
 #if @precision@ == 3
-    const npy_longdouble A_crossover = 10.0l;
-    const npy_longdouble B_crossover = 0.6417l;
+    const npymath_longdouble A_crossover = 10.0l;
+    const npymath_longdouble B_crossover = 0.6417l;
 #if NPYMATH_SIZEOF_LONGDOUBLE == NPYMATH_SIZEOF_DOUBLE
-    const npy_longdouble FOUR_SQRT_MIN = 5.9666725849601654e-154;
+    const npymath_longdouble FOUR_SQRT_MIN = 5.9666725849601654e-154;
 #else
-    const npy_longdouble FOUR_SQRT_MIN = 7.3344154702193886625e-2466l;
+    const npymath_longdouble FOUR_SQRT_MIN = 7.3344154702193886625e-2466l;
 #endif
 #endif
     @type@ R, S, A; /* A, B, R, and S are as in Hull et al. */
@@ -1194,20 +1194,20 @@ _clog_for_large_values@c@(@type@ x, @type@ y,
     @type@ *rr, @type@ *ri)
 {
 #if @precision@ == 1
-    const npy_float QUARTER_SQRT_MAX = 4.611685743549481e+18f;
-    const npy_float SQRT_MIN = 1.0842021724855044e-19f;
+    const npymath_float QUARTER_SQRT_MAX = 4.611685743549481e+18f;
+    const npymath_float SQRT_MIN = 1.0842021724855044e-19f;
  #endif
 #if @precision@ == 2
-    const npy_double QUARTER_SQRT_MAX = 3.3519519824856489e+153;
-    const npy_double SQRT_MIN = 1.4916681462400413e-154;
+    const npymath_double QUARTER_SQRT_MAX = 3.3519519824856489e+153;
+    const npymath_double SQRT_MIN = 1.4916681462400413e-154;
  #endif
 #if @precision@ == 3
 #if NPYMATH_SIZEOF_LONGDOUBLE == NPYMATH_SIZEOF_DOUBLE
-    const npy_longdouble QUARTER_SQRT_MAX = 3.3519519824856489e+153;
-    const npy_longdouble SQRT_MIN = 1.4916681462400413e-154;
+    const npymath_longdouble QUARTER_SQRT_MAX = 3.3519519824856489e+153;
+    const npymath_longdouble SQRT_MIN = 1.4916681462400413e-154;
 #else
-    const npy_longdouble QUARTER_SQRT_MAX = 2.7268703390485398235e+2465l;
-    const npy_longdouble SQRT_MIN = 1.8336038675548471656e-2466l;
+    const npymath_longdouble QUARTER_SQRT_MAX = 2.7268703390485398235e+2465l;
+    const npymath_longdouble SQRT_MIN = 1.8336038675548471656e-2466l;
 #endif
 #endif
     @type@ ax, ay, t;
@@ -1250,23 +1250,23 @@ npy_cacos@c@(@ctype@ z)
 {
 #if @precision@ == 1
     /* this is sqrt(6*EPS) */
-    const npy_float SQRT_6_EPSILON = 8.4572793338e-4f;
+    const npymath_float SQRT_6_EPSILON = 8.4572793338e-4f;
     /* chosen such that pio2_hi + pio2_lo == pio2_hi but causes FE_INEXACT. */
-    const volatile npy_float pio2_lo = 7.5497899549e-9f;
+    const volatile npymath_float pio2_lo = 7.5497899549e-9f;
 #endif
 #if @precision@ == 2
-    const npy_double SQRT_6_EPSILON = 3.65002414998885671e-08;
-    const volatile npy_double pio2_lo = 6.1232339957367659e-17;
+    const npymath_double SQRT_6_EPSILON = 3.65002414998885671e-08;
+    const volatile npymath_double pio2_lo = 6.1232339957367659e-17;
 #endif
 #if @precision@ == 3
-    const npy_longdouble SQRT_6_EPSILON = 8.0654900873493277169e-10l;
-    const volatile npy_longdouble pio2_lo = 2.710505431213761085e-20l;
+    const npymath_longdouble SQRT_6_EPSILON = 8.0654900873493277169e-10l;
+    const volatile npymath_longdouble pio2_lo = 2.710505431213761085e-20l;
 #endif
     const @type@ RECIP_EPSILON = 1.0@c@ / @TEPS@;
     const @type@ pio2_hi = NPY_PI_2@c@;
     @type@ x, y, ax, ay, wx, wy, rx, ry, B, sqrt_A2mx2, new_x;
-    npy_int sx, sy;
-    npy_int B_is_usable;
+    npymath_int sx, sy;
+    npymath_int B_is_usable;
 
     x = npy_creal@c@(z);
     y = npy_cimag@c@(z);
@@ -1408,17 +1408,17 @@ npy_casinh@c@(@ctype@ z)
 {
 #if @precision@ == 1
     /* this is sqrt(6*EPS) */
-    const npy_float SQRT_6_EPSILON = 8.4572793338e-4f;
+    const npymath_float SQRT_6_EPSILON = 8.4572793338e-4f;
 #endif
 #if @precision@ == 2
-    const npy_double SQRT_6_EPSILON = 3.65002414998885671e-08;
+    const npymath_double SQRT_6_EPSILON = 3.65002414998885671e-08;
 #endif
 #if @precision@ == 3
-    const npy_longdouble SQRT_6_EPSILON = 8.0654900873493277169e-10l;
+    const npymath_longdouble SQRT_6_EPSILON = 8.0654900873493277169e-10l;
 #endif
     const @type@ RECIP_EPSILON = 1.0@c@ / @TEPS@;
     @type@ x, y, ax, ay, wx, wy, rx, ry, B, sqrt_A2my2, new_y;
-    npy_int B_is_usable;
+    npymath_int B_is_usable;
 
     x = npy_creal@c@(z);
     y = npy_cimag@c@(z);
@@ -1494,17 +1494,17 @@ static inline @type@
 _sum_squares@c@(@type@ x, @type@ y)
 {
 #if @precision@ == 1
-const npy_float SQRT_MIN = 1.0842022e-19f;
+const npymath_float SQRT_MIN = 1.0842022e-19f;
 #endif
 #if @precision@ == 2
-const npy_double SQRT_MIN = 1.4916681462400413e-154; /* sqrt(DBL_MIN) */
+const npymath_double SQRT_MIN = 1.4916681462400413e-154; /* sqrt(DBL_MIN) */
 #endif
 #if @precision@ == 3
 #if NPYMATH_SIZEOF_LONGDOUBLE == NPYMATH_SIZEOF_DOUBLE
-const npy_longdouble SQRT_MIN = 1.4916681462400413e-154; /* sqrt(DBL_MIN) */
+const npymath_longdouble SQRT_MIN = 1.4916681462400413e-154; /* sqrt(DBL_MIN) */
 #else
 /* this is correct for 80 bit long doubles */
-const npy_longdouble SQRT_MIN = 1.8336038675548471656e-2466l;
+const npymath_longdouble SQRT_MIN = 1.8336038675548471656e-2466l;
 #endif
 #endif
     /* Avoid underflow when y is small. */
@@ -1527,12 +1527,12 @@ const npy_longdouble SQRT_MIN = 1.8336038675548471656e-2466l;
 #if @precision@ == 1
 #define BIAS (FLT_MAX_EXP - 1)
 #define CUTOFF (FLT_MANT_DIG / 2 + 1)
-static inline npy_float
-_real_part_reciprocalf(npy_float x, npy_float y)
+static inline npymath_float
+_real_part_reciprocalf(npymath_float x, npymath_float y)
 {
-    npy_float scale;
-    npy_uint32 hx, hy;
-    npy_int32 ix, iy;
+    npymath_float scale;
+    npymath_uint32 hx, hy;
+    npymath_int32 ix, iy;
 
     GET_FLOAT_WORD(hx, x);
     ix = hx & 0x7f800000;
@@ -1560,12 +1560,12 @@ _real_part_reciprocalf(npy_float x, npy_float y)
 #define BIAS (DBL_MAX_EXP - 1)
 /*  more guard digits are useful iff there is extra precision. */
 #define CUTOFF (DBL_MANT_DIG / 2 + 1)  /* just half or 1 guard digit */
-static inline npy_double
-_real_part_reciprocal(npy_double x, npy_double y)
+static inline npymath_double
+_real_part_reciprocal(npymath_double x, npymath_double y)
 {
-    npy_double scale;
-    npy_uint32 hx, hy;
-    npy_int32 ix, iy;
+    npymath_double scale;
+    npymath_uint32 hx, hy;
+    npymath_int32 ix, iy;
 
     /*
      * This code is inspired by the C99 document n1124.pdf, Section G.5.1,
@@ -1602,13 +1602,13 @@ _real_part_reciprocal(npy_double x, npy_double y)
 
 #define BIAS (LDBL_MAX_EXP - 1)
 #define CUTOFF (LDBL_MANT_DIG / 2 + 1)
-static inline npy_longdouble
-_real_part_reciprocall(npy_longdouble x,
-    npy_longdouble y)
+static inline npymath_longdouble
+_real_part_reciprocall(npymath_longdouble x,
+    npymath_longdouble y)
 {
-    npy_longdouble scale;
+    npymath_longdouble scale;
     union IEEEl2bitsrep ux, uy, us;
-    npy_int32 ix, iy;
+    npymath_int32 ix, iy;
 
     ux.e = x;
     ix = GET_LDOUBLE_EXP(ux);
@@ -1635,9 +1635,9 @@ _real_part_reciprocall(npy_longdouble x,
 
 #else
 
-static inline npy_longdouble
-_real_part_reciprocall(npy_longdouble x,
-    npy_longdouble y)
+static inline npymath_longdouble
+_real_part_reciprocall(npymath_longdouble x,
+    npymath_longdouble y)
 {
     return x/(x*x + y*y);
 }
@@ -1650,17 +1650,17 @@ npy_catanh@c@(@ctype@ z)
 {
 #if @precision@ == 1
     /* this is sqrt(3*EPS) */
-    const npy_float SQRT_3_EPSILON = 5.9801995673e-4f;
+    const npymath_float SQRT_3_EPSILON = 5.9801995673e-4f;
     /* chosen such that pio2_hi + pio2_lo == pio2_hi but causes FE_INEXACT. */
-    const volatile npy_float pio2_lo = 7.5497899549e-9f;
+    const volatile npymath_float pio2_lo = 7.5497899549e-9f;
 #endif
 #if @precision@ == 2
-    const npy_double SQRT_3_EPSILON = 2.5809568279517849e-8;
-    const volatile npy_double pio2_lo = 6.1232339957367659e-17;
+    const npymath_double SQRT_3_EPSILON = 2.5809568279517849e-8;
+    const volatile npymath_double pio2_lo = 6.1232339957367659e-17;
 #endif
 #if @precision@ == 3
-    const npy_longdouble SQRT_3_EPSILON = 5.70316273435758915310e-10l;
-    const volatile npy_longdouble pio2_lo = 2.710505431213761085e-20l;
+    const npymath_longdouble SQRT_3_EPSILON = 5.70316273435758915310e-10l;
+    const volatile npymath_longdouble pio2_lo = 2.710505431213761085e-20l;
 #endif
     const @type@ RECIP_EPSILON = 1.0@c@ / @TEPS@;
     const @type@ pio2_hi = NPY_PI_2@c@;
@@ -1741,8 +1741,8 @@ npy_catanh@c@(@ctype@ z)
  *=========================================================*/
 
 /**begin repeat
- * #type = npy_float, npy_double, npy_longdouble#
- * #ctype = npy_cfloat, npy_cdouble, npy_clongdouble#
+ * #type = npymath_float, npymath_double, npymath_longdouble#
+ * #ctype = npymath_cfloat, npymath_cdouble, npymath_clongdouble#
  * #c = f, , l#
  * #C = F, , L#
  */

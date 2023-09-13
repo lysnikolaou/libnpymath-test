@@ -39,15 +39,15 @@ using std::uint_fast32_t;
  *
  * The C implementation defines long double as double
  * on MinGW to provide compatibility with MSVC to unify
- * one behavior under Windows OS, which makes npy_longdouble
+ * one behavior under Windows OS, which makes npymath_longdouble
  * not fit to be used with template specialization or overloading.
  *
- * This type will be set to `void` when `npy_longdouble` is not defined
+ * This type will be set to `void` when `npymath_longdouble` is not defined
  * as `long double`.
  */
 using LongDouble = typename std::conditional<
-    !std::is_same<npy_longdouble, long double>::value,
-     void, npy_longdouble
+    !std::is_same<npymath_longdouble, long double>::value,
+     void, npymath_longdouble
 >::type;
 /// @} cpp_core_types
 

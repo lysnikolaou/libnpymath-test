@@ -25,8 +25,8 @@
 static double _next(double x, int p)
 {
     volatile double t;
-    npy_int32 hx, hy, ix;
-    npy_uint32 lx;
+    npymath_int32 hx, hy, ix;
+    npymath_uint32 lx;
 
     EXTRACT_WORDS(hx, lx, x);
     ix = hx & 0x7fffffff;       /* |x| */
@@ -71,7 +71,7 @@ static double _next(double x, int p)
 static float _nextf(float x, int p)
 {
     volatile float t;
-    npy_int32 hx, hy, ix;
+    npymath_int32 hx, hy, ix;
 
     GET_FLOAT_WORD(hx, x);
     ix = hx & 0x7fffffff;       /* |x| */
@@ -123,15 +123,15 @@ static float _nextf(float x, int p)
 /* only works for big endian */
 typedef union
 {
-    npy_longdouble value;
+    npymath_longdouble value;
     struct
     {
-        npy_uint64 msw;
-        npy_uint64 lsw;
+        npymath_uint64 msw;
+        npymath_uint64 lsw;
     } parts64;
     struct
     {
-        npy_uint32 w0, w1, w2, w3;
+        npymath_uint32 w0, w1, w2, w3;
     } parts32;
 } ieee854_long_double_shape_type;
 
@@ -155,11 +155,11 @@ do {                                   \
   (d) = qw_u.value;                    \
 } while (0)
 
-static npy_longdouble _nextl(npy_longdouble x, int p)
+static npymath_longdouble _nextl(npymath_longdouble x, int p)
 {
-    npy_int64 hx,ihx,ilx;
-    npy_uint64 lx;
-    npy_longdouble u;
+    npymath_int64 hx,ihx,ilx;
+    npymath_uint64 lx;
+    npymath_longdouble u;
 
     GET_LDOUBLE_WORDS64(hx, lx, x);
     ihx = hx & 0x7fffffffffffffffLL;      /* |hx| */
@@ -190,8 +190,8 @@ static npy_longdouble _nextl(npy_longdouble x, int p)
             u = math_opt_barrier (x);
             x -= LDBL_TRUE_MIN;
             if (ihx < 0x0360000000000000LL
-                    || (hx > 0 && (npy_int64) lx <= 0)
-                    || (hx < 0 && (npy_int64) lx > 1)) {
+                    || (hx > 0 && (npymath_int64) lx <= 0)
+                    || (hx < 0 && (npymath_int64) lx > 1)) {
                 u = u * u;
                 math_force_eval (u);        /* raise underflow flag */
             }
@@ -206,7 +206,7 @@ static npy_longdouble _nextl(npy_longdouble x, int p)
     } else {                /* p >= 0, x += ulp */
         if((hx==0x7fefffffffffffffLL)&&(lx==0x7c8ffffffffffffeLL))
             return x+x; /* overflow, return +inf */
-        if ((npy_uint64) hx >= 0xfff0000000000000ULL) {
+        if ((npymath_uint64) hx >= 0xfff0000000000000ULL) {
             SET_LDOUBLE_WORDS64(u,0xffefffffffffffffLL,0xfc8ffffffffffffeLL);
             return u;
         }
@@ -214,8 +214,8 @@ static npy_longdouble _nextl(npy_longdouble x, int p)
             u = math_opt_barrier (x);
             x += LDBL_TRUE_MIN;
             if (ihx < 0x0360000000000000LL
-                    || (hx > 0 && (npy_int64) lx < 0 && lx != 0x8000000000000001LL)
-                    || (hx < 0 && (npy_int64) lx >= 0)) {
+                    || (hx > 0 && (npymath_int64) lx < 0 && lx != 0x8000000000000001LL)
+                    || (hx < 0 && (npymath_int64) lx >= 0)) {
                 u = u * u;
                 math_force_eval (u);        /* raise underflow flag */
             }
@@ -232,9 +232,9 @@ static npy_longdouble _nextl(npy_longdouble x, int p)
     }
 }
 #else
-static npy_longdouble _nextl(npy_longdouble x, int p)
+static npymath_longdouble _nextl(npymath_longdouble x, int p)
 {
-    volatile npy_longdouble t;
+    volatile npymath_longdouble t;
     union IEEEl2bitsrep ux;
 
     ux.e = x;
@@ -299,7 +299,7 @@ static npy_longdouble _nextl(npy_longdouble x, int p)
 /**begin repeat
  * #suff = f,,l#
  * #SUFF = F,,L#
- * #type = npy_float, npy_double, npy_longdouble#
+ * #type = npymath_float, npymath_double, npymath_longdouble#
  */
 @type@ npy_spacing@suff@(@type@ x)
 {
