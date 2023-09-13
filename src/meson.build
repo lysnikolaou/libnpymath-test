@@ -324,7 +324,8 @@ libnpymath_sources = [
 ]
 libnpymath_includes = include_directories('include', '.', 'common')
 
-libnpymath = shared_library('npymath',
+libnpymath = static_library(
+  'libnpymath',
   libnpymath_sources,
   c_args: staticlib_cflags,
   cpp_args: staticlib_cppflags,
