@@ -315,25 +315,25 @@ npy_math_internal_h = custom_target(
   command: [src_file_cli, '@INPUT@', '-o', '@OUTPUT@'],
 )
 
-npymath_sources = [
+libnpymath_sources = [
   src_file.process('ieee754.c.src'),
   src_file.process('npy_math_complex.c.src'),
   npy_math_internal_h,
   'halffloat.cpp',
   'npy_math.c',
 ]
-npymath_includes = include_directories('include', '.', 'common')
+libnpymath_includes = include_directories('include', '.', 'common')
 
-npymath_lib = shared_library('npymath',
-  npymath_sources,
+libnpymath = shared_library('npymath',
+  libnpymath_sources,
   c_args: staticlib_cflags,
   cpp_args: staticlib_cppflags,
-  include_directories: npymath_includes,
+  include_directories: libnpymath_includes,
   dependencies: py_dep,
   install: true,
   install_dir: np_dir / 'core' / 'lib',
 )
 
-npymath_dep = declare_dependency(include_directories: npymath_includes, link_with: npymath_lib)
+libnpymath_dep = declare_dependency(include_directories: libnpymath_includes, link_with: libnpymath)
 
 subdir('include')

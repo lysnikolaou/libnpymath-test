@@ -1,5 +1,5 @@
 project(
-  'npymath',
+  'libnpymath',
   'c', 'cpp',
   version: '0.0.1',
   license: 'BSD-3',
@@ -16,11 +16,11 @@ cpp = meson.get_compiler('cpp')
 # Check compiler is recent enough (see the SciPy Toolchain Roadmap for details)
 if cc.get_id() == 'gcc'
   if not cc.version().version_compare('>=8.4')
-    error('npymath requires GCC >= 8.4')
+    error('libnpymath requires GCC >= 8.4')
   endif
 elif cc.get_id() == 'msvc'
   if not cc.version().version_compare('>=19.20')
-    error('npymath requires at least vc142 (default with Visual Studio 2019) ' + \
+    error('libnpymath requires at least vc142 (default with Visual Studio 2019) ' + \
           'when building with MSVC')
   endif
 endif
