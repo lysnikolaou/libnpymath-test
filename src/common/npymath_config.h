@@ -12,7 +12,7 @@
 
 #define NPY_BLOCK_POWF
 #define NPY_BLOCK_EXPF
-#undef HAVE___THREAD
+#undef NPYMATH_HAVE___THREAD
 
 #endif
 
@@ -31,39 +31,39 @@
 
 #if defined(_MSC_VER)
 
-#undef HAVE_CASIN
-#undef HAVE_CASINF
-#undef HAVE_CASINL
-#undef HAVE_CASINH
-#undef HAVE_CASINHF
-#undef HAVE_CASINHL
-#undef HAVE_CATAN
-#undef HAVE_CATANF
-#undef HAVE_CATANL
-#undef HAVE_CATANH
-#undef HAVE_CATANHF
-#undef HAVE_CATANHL
-#undef HAVE_CSQRT
-#undef HAVE_CSQRTF
-#undef HAVE_CSQRTL
-#undef HAVE_CLOG
-#undef HAVE_CLOGF
-#undef HAVE_CLOGL
-#undef HAVE_CACOS
-#undef HAVE_CACOSF
-#undef HAVE_CACOSL
-#undef HAVE_CACOSH
-#undef HAVE_CACOSHF
-#undef HAVE_CACOSHL
+#undef NPYMATH_HAVE_CASIN
+#undef NPYMATH_HAVE_CASINF
+#undef NPYMATH_HAVE_CASINL
+#undef NPYMATH_HAVE_CASINH
+#undef NPYMATH_HAVE_CASINHF
+#undef NPYMATH_HAVE_CASINHL
+#undef NPYMATH_HAVE_CATAN
+#undef NPYMATH_HAVE_CATANF
+#undef NPYMATH_HAVE_CATANL
+#undef NPYMATH_HAVE_CATANH
+#undef NPYMATH_HAVE_CATANHF
+#undef NPYMATH_HAVE_CATANHL
+#undef NPYMATH_HAVE_CSQRT
+#undef NPYMATH_HAVE_CSQRTF
+#undef NPYMATH_HAVE_CSQRTL
+#undef NPYMATH_HAVE_CLOG
+#undef NPYMATH_HAVE_CLOGF
+#undef NPYMATH_HAVE_CLOGL
+#undef NPYMATH_HAVE_CACOS
+#undef NPYMATH_HAVE_CACOSF
+#undef NPYMATH_HAVE_CACOSL
+#undef NPYMATH_HAVE_CACOSH
+#undef NPYMATH_HAVE_CACOSHF
+#undef NPYMATH_HAVE_CACOSHL
 
 #endif
 
 /* MSVC _hypot messes with fp precision mode on 32-bit, see gh-9567 */
 #if defined(_MSC_VER) && !defined(_WIN64)
 
-#undef HAVE_CABS
-#undef HAVE_CABSF
-#undef HAVE_CABSL
+#undef NPYMATH_HAVE_CABS
+#undef NPYMATH_HAVE_CABSF
+#undef NPYMATH_HAVE_CABSL
 
 #define NPY_BLOCK_HYPOT
 #define NPY_BLOCK_HYPOTF
@@ -86,43 +86,43 @@
 
 #ifdef __CYGWIN__
 /* Loss of precision */
-#undef HAVE_CASINHL
-#undef HAVE_CASINH
-#undef HAVE_CASINHF
+#undef NPYMATH_HAVE_CASINHL
+#undef NPYMATH_HAVE_CASINH
+#undef NPYMATH_HAVE_CASINHF
 
 /* Loss of precision */
-#undef HAVE_CATANHL
-#undef HAVE_CATANH
-#undef HAVE_CATANHF
+#undef NPYMATH_HAVE_CATANHL
+#undef NPYMATH_HAVE_CATANH
+#undef NPYMATH_HAVE_CATANHF
 
 /* Loss of precision and branch cuts */
-#undef HAVE_CATANL
-#undef HAVE_CATAN
-#undef HAVE_CATANF
+#undef NPYMATH_HAVE_CATANL
+#undef NPYMATH_HAVE_CATAN
+#undef NPYMATH_HAVE_CATANF
 
 /* Branch cuts */
-#undef HAVE_CACOSHF
-#undef HAVE_CACOSH
+#undef NPYMATH_HAVE_CACOSHF
+#undef NPYMATH_HAVE_CACOSH
 
 /* Branch cuts */
-#undef HAVE_CSQRTF
-#undef HAVE_CSQRT
+#undef NPYMATH_HAVE_CSQRTF
+#undef NPYMATH_HAVE_CSQRT
 
 /* Branch cuts and loss of precision */
-#undef HAVE_CASINF
-#undef HAVE_CASIN
-#undef HAVE_CASINL
+#undef NPYMATH_HAVE_CASINF
+#undef NPYMATH_HAVE_CASIN
+#undef NPYMATH_HAVE_CASINL
 
 /* Branch cuts */
-#undef HAVE_CACOSF
-#undef HAVE_CACOS
+#undef NPYMATH_HAVE_CACOSF
+#undef NPYMATH_HAVE_CACOS
 
 /* log2(exp2(i)) off by a few eps */
 #define NPY_BLOCK_LOG2
 
 /* np.power(..., dtype=np.complex256) doesn't report overflow */
-#undef HAVE_CPOWL
-#undef HAVE_CEXPL
+#undef NPYMATH_HAVE_CPOWL
+#undef NPYMATH_HAVE_CEXPL
 
 #include <cygwin/version.h>
 #if CYGWIN_VERSION_DLL_MAJOR < 3003
@@ -132,34 +132,34 @@
 #endif
 
 /* Disable broken gnu trig functions */
-#if defined(HAVE_FEATURES_H)
+#if defined(NPYMATH_HAVE_FEATURES_H)
 #include <features.h>
 
 #if defined(__GLIBC__)
 #if !__GLIBC_PREREQ(2, 18)
 
-#undef HAVE_CASIN
-#undef HAVE_CASINF
-#undef HAVE_CASINL
-#undef HAVE_CASINH
-#undef HAVE_CASINHF
-#undef HAVE_CASINHL
-#undef HAVE_CATAN
-#undef HAVE_CATANF
-#undef HAVE_CATANL
-#undef HAVE_CATANH
-#undef HAVE_CATANHF
-#undef HAVE_CATANHL
-#undef HAVE_CACOS
-#undef HAVE_CACOSF
-#undef HAVE_CACOSL
-#undef HAVE_CACOSH
-#undef HAVE_CACOSHF
-#undef HAVE_CACOSHL
+#undef NPYMATH_HAVE_CASIN
+#undef NPYMATH_HAVE_CASINF
+#undef NPYMATH_HAVE_CASINL
+#undef NPYMATH_HAVE_CASINH
+#undef NPYMATH_HAVE_CASINHF
+#undef NPYMATH_HAVE_CASINHL
+#undef NPYMATH_HAVE_CATAN
+#undef NPYMATH_HAVE_CATANF
+#undef NPYMATH_HAVE_CATANL
+#undef NPYMATH_HAVE_CATANH
+#undef NPYMATH_HAVE_CATANHF
+#undef NPYMATH_HAVE_CATANHL
+#undef NPYMATH_HAVE_CACOS
+#undef NPYMATH_HAVE_CACOSF
+#undef NPYMATH_HAVE_CACOSL
+#undef NPYMATH_HAVE_CACOSH
+#undef NPYMATH_HAVE_CACOSHF
+#undef NPYMATH_HAVE_CACOSHL
 
 #endif  /* __GLIBC_PREREQ(2, 18) */
 #endif  /* defined(__GLIBC_PREREQ) */
 
-#endif  /* defined(HAVE_FEATURES_H) */
+#endif  /* defined(NPYMATH_HAVE_FEATURES_H) */
 
 #endif  /* NPYMATH_CONFIG_H_ */

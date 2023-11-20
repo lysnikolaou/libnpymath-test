@@ -104,13 +104,13 @@ foreach func: c99_complex_funcs
   func_single = func + 'f'
   func_longdouble = func + 'l'
   if cc.has_function(func)
-    cdata.set10('HAVE_' + func.to_upper(), true)
+    cdata.set10('NPYMATH_HAVE_' + func.to_upper(), true)
   endif
   if cc.has_function(func_single)
-    cdata.set10('HAVE_' + func_single.to_upper(), true)
+    cdata.set10('NPYMATH_HAVE_' + func_single.to_upper(), true)
   endif
   if cc.has_function(func_longdouble)
-    cdata.set10('HAVE_' + func_longdouble.to_upper(), true)
+    cdata.set10('NPYMATH_HAVE_' + func_longdouble.to_upper(), true)
   endif
 endforeach
 
@@ -122,13 +122,13 @@ foreach macro: c99_macros
     cdata.set10('NPYMATH_HAVE_DECL_' + macro.to_upper(), true)
     if not cc.has_header_symbol('Python.h', macro, dependencies: py_dep)
       # Add in config.h as well, except if it will clash with Python's config.h content
-      cdata.set10('HAVE_DECL_' + macro.to_upper(), true)
+      cdata.set10('NPYMATH_HAVE_DECL_' + macro.to_upper(), true)
     endif
   endif
 endforeach
 
 if cc.has_header('features.h')
-  cdata.set10('HAVE_FEATURES_H', true)
+  cdata.set10('NPYMATH_HAVE_FEATURES_H', true)
 endif
 
 # Max possible optimization flags. We pass this flags to all our dispatch-able
@@ -171,7 +171,7 @@ foreach intrin: optional_intrinsics
   if define.length() == 1
     define_name = define[0]
   else
-    define_name = 'HAVE_' + func.to_upper()
+    define_name = 'NPYMATH_HAVE_' + func.to_upper()
   endif
   if cc.links(code)
     cdata.set10(define_name, true)
@@ -269,7 +269,7 @@ endif
 if longdouble_format == 'UNKNOWN' or longdouble_format == 'UNDEFINED'
   error('Unknown long double format of size: ' + cc.sizeof('long double').to_string())
 endif
-cdata.set10('HAVE_LDOUBLE_' + longdouble_format, true)
+cdata.set10('NPYMATH_HAVE_LDOUBLE_' + longdouble_format, true)
 
 if cc.has_header('endian.h')
   cdata.set10('NPYMATH_HAVE_ENDIAN_H', true)
@@ -324,15 +324,15 @@ libnpymath_sources = [
 ]
 libnpymath_includes = include_directories('include', '.', 'common')
 
-libnpymath = static_library(
-  'libnpymath',
+libnpymath = library(
+  'npymath',
   libnpymath_sources,
   c_args: staticlib_cflags,
   cpp_args: staticlib_cppflags,
   include_directories: libnpymath_includes,
   dependencies: py_dep,
   install: true,
-  install_dir: np_dir / 'core' / 'lib',
+  install_dir: np_dir / '_core' / 'lib',
 )
 
 libnpymath_dep = declare_dependency(include_directories: libnpymath_includes, link_with: libnpymath)

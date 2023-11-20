@@ -118,8 +118,8 @@ _next(float x, int p)
     return x;
 }
 
-#if defined(HAVE_LDOUBLE_DOUBLE_DOUBLE_BE) || \
-        defined(HAVE_LDOUBLE_DOUBLE_DOUBLE_LE)
+#if defined(NPYMATH_HAVE_LDOUBLE_DOUBLE_DOUBLE_BE) || \
+        defined(NPYMATH_HAVE_LDOUBLE_DOUBLE_DOUBLE_LE)
 
 /*
  * FIXME: this is ugly and untested. The asm part only works with gcc, and we

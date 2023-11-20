@@ -40,7 +40,7 @@
  * flag in an efficient way. The flag is IEEE specific. See
  * https://github.com/freebsd/freebsd/blob/4c6378299/lib/msun/src/catrig.c#L42
  */
-#if !defined(HAVE_CACOSF) || !defined(HAVE_CACOSL) || !defined(HAVE_CASINHF) || !defined(HAVE_CASINHL)
+#if !defined(NPYMATH_HAVE_CACOSF) || !defined(NPYMATH_HAVE_CACOSL) || !defined(NPYMATH_HAVE_CASINHF) || !defined(NPYMATH_HAVE_CASINHL)
 #define raise_inexact() do {                        \
     volatile npymath_float NPYMATH_UNUSED(junk) = 1 + tiny; \
 } while (0)
@@ -123,7 +123,7 @@ cdiv@c@(@ctype@ a, @ctype@ b)
  * Custom implementation of missing complex C99 functions
  *=========================================================*/
 
-#ifndef HAVE_CABS@C@
+#ifndef NPYMATH_HAVE_CABS@C@
 @type@
 npy_cabs@c@(@ctype@ z)
 {
@@ -131,7 +131,7 @@ npy_cabs@c@(@ctype@ z)
 }
 #endif
 
-#ifndef HAVE_CARG@C@
+#ifndef NPYMATH_HAVE_CARG@C@
 @type@
 npy_carg@c@(@ctype@ z)
 {
@@ -163,7 +163,7 @@ npy_carg@c@(@ctype@ z)
 #define SCALED_CEXP_LOWERL 11357.216553474703895L
 #define SCALED_CEXP_UPPERL 22756.021937783004509L
 
-#if !defined(HAVE_CEXP@C@)
+#if !defined(NPYMATH_HAVE_CEXP@C@)
 
 static
 @ctype@
@@ -193,7 +193,7 @@ _npy_scaled_cexp@c@(@type@ x, @type@ y, npymath_int expt)
 
 #endif
 
-#ifndef HAVE_CEXP@C@
+#ifndef NPYMATH_HAVE_CEXP@C@
 
 @ctype@
 npy_cexp@c@(@ctype@ z)
@@ -270,7 +270,7 @@ npy_cexp@c@(@ctype@ z)
 }
 #endif
 
-#ifndef HAVE_CLOG@C@
+#ifndef NPYMATH_HAVE_CLOG@C@
 /* algorithm from cpython, rev. d86f5686cef9
  *
  * The usual formula for the real part is log(hypot(z.real, z.imag)).
@@ -340,7 +340,7 @@ npy_clog@c@(@ctype@ z)
 }
 #endif
 
-#ifndef HAVE_CSQRT@C@
+#ifndef NPYMATH_HAVE_CSQRT@C@
 
 /* We risk spurious overflow for components >= DBL_MAX / (1 + sqrt(2)). */
 #define THRESH  (@TMAX@ / (1 + NPY_SQRT2@c@))
@@ -423,7 +423,7 @@ npy_csqrt@c@(@ctype@ z)
  */
 
 /* private function for use in npy_pow{f, ,l} */
-#ifdef HAVE_CPOW@C@
+#ifdef NPYMATH_HAVE_CPOW@C@
 static @ctype@
 sys_cpow@c@(@ctype@ x, @ctype@ y)
 {
@@ -519,7 +519,7 @@ npy_cpow@c@ (@ctype@ a, @ctype@ b)
         }
     }
 
-#ifdef HAVE_CPOW@C@
+#ifdef NPYMATH_HAVE_CPOW@C@
     return sys_cpow@c@(a, b);
 
 #else
@@ -535,7 +535,7 @@ npy_cpow@c@ (@ctype@ a, @ctype@ b)
 }
 
 
-#ifndef HAVE_CCOS@C@
+#ifndef NPYMATH_HAVE_CCOS@C@
 @ctype@
 npy_ccos@c@(@ctype@ z)
 {
@@ -544,7 +544,7 @@ npy_ccos@c@(@ctype@ z)
 }
 #endif
 
-#ifndef HAVE_CSIN@C@
+#ifndef NPYMATH_HAVE_CSIN@C@
 @ctype@
 npy_csin@c@(@ctype@ z)
 {
@@ -554,7 +554,7 @@ npy_csin@c@(@ctype@ z)
 }
 #endif
 
-#ifndef HAVE_CTAN@C@
+#ifndef NPYMATH_HAVE_CTAN@C@
 @ctype@
 npy_ctan@c@(@ctype@ z)
 {
@@ -564,7 +564,7 @@ npy_ctan@c@(@ctype@ z)
 }
 #endif
 
-#ifndef HAVE_CCOSH@C@
+#ifndef NPYMATH_HAVE_CCOSH@C@
 /*
  * Taken from the msun library in FreeBSD, rev 226599.
  *
@@ -710,7 +710,7 @@ npy_ccosh@c@(@ctype@ z)
 #undef CCOSH_HUGE
 #endif
 
-#ifndef HAVE_CSINH@C@
+#ifndef NPYMATH_HAVE_CSINH@C@
 /*
  * Taken from the msun library in FreeBSD, rev 226599.
  *
@@ -857,7 +857,7 @@ npy_csinh@c@(@ctype@ z)
 #undef CSINH_HUGE
 #endif
 
-#ifndef HAVE_CTANH@C@
+#ifndef NPYMATH_HAVE_CTANH@C@
 /*
  * Taken from the msun library in FreeBSD, rev 226600.
  *
@@ -971,7 +971,7 @@ npy_ctanh@c@(@ctype@ z)
 #undef TANHL_HUGE
 #endif
 
-#if !defined (HAVE_CACOS@C@) || !defined (HAVE_CASINH@C@)
+#if !defined (NPYMATH_HAVE_CACOS@C@) || !defined (NPYMATH_HAVE_CASINH@C@)
 /*
  * Complex inverse trig functions taken from the msum library in FreeBSD
  * revision 251404
@@ -1244,7 +1244,7 @@ _clog_for_large_values@c@(@type@ x, @type@ y,
 }
 #endif
 
-#ifndef HAVE_CACOS@C@
+#ifndef NPYMATH_HAVE_CACOS@C@
 @ctype@
 npy_cacos@c@(@ctype@ z)
 {
@@ -1343,7 +1343,7 @@ npy_cacos@c@(@ctype@ z)
 }
 #endif
 
-#ifndef HAVE_CASIN@C@
+#ifndef NPYMATH_HAVE_CASIN@C@
 @ctype@
 npy_casin@c@(@ctype@ z)
 {
@@ -1353,7 +1353,7 @@ npy_casin@c@(@ctype@ z)
 }
 #endif
 
-#ifndef HAVE_CATAN@C@
+#ifndef NPYMATH_HAVE_CATAN@C@
 @ctype@
 npy_catan@c@(@ctype@ z)
 {
@@ -1363,7 +1363,7 @@ npy_catan@c@(@ctype@ z)
 }
 #endif
 
-#ifndef HAVE_CACOSH@C@
+#ifndef NPYMATH_HAVE_CACOSH@C@
 @ctype@
 npy_cacosh@c@(@ctype@ z)
 {
@@ -1394,7 +1394,7 @@ npy_cacosh@c@(@ctype@ z)
 }
 #endif
 
-#ifndef HAVE_CASINH@C@
+#ifndef NPYMATH_HAVE_CASINH@C@
 /*
  * casinh(z) = z + O(z^3)   as z -> 0
  *
@@ -1482,7 +1482,7 @@ npy_casinh@c@(@ctype@ z)
 }
 #endif
 
-#ifndef HAVE_CATANH@C@
+#ifndef NPYMATH_HAVE_CATANH@C@
 /*
  * sum_squares(x,y) = x*x + y*y (or just x*x if y*y would underflow).
  * Assumes x*x and y*y will not overflow.
@@ -1597,8 +1597,8 @@ _real_part_reciprocal(npymath_double x, npymath_double y)
 #endif
 
 #if @precision@ == 3
-#if !defined(HAVE_LDOUBLE_DOUBLE_DOUBLE_BE) && \
-    !defined(HAVE_LDOUBLE_DOUBLE_DOUBLE_LE)
+#if !defined(NPYMATH_HAVE_LDOUBLE_DOUBLE_DOUBLE_BE) && \
+    !defined(NPYMATH_HAVE_LDOUBLE_DOUBLE_DOUBLE_LE)
 
 #define BIAS (LDBL_MAX_EXP - 1)
 #define CUTOFF (LDBL_MANT_DIG / 2 + 1)
@@ -1751,7 +1751,7 @@ npy_catanh@c@(@ctype@ z)
  * #kind = cabs,carg#
  * #KIND = CABS,CARG#
  */
-#ifdef HAVE_@KIND@@C@
+#ifdef NPYMATH_HAVE_@KIND@@C@
 @type@
 npy_@kind@@c@(@ctype@ z)
 {
@@ -1766,7 +1766,7 @@ npy_@kind@@c@(@ctype@ z)
  * #KIND = CEXP,CLOG,CSQRT,CCOS,CSIN,CTAN,CCOSH,CSINH,CTANH,
  *         CACOS,CASIN,CATAN,CACOSH,CASINH,CATANH#
  */
-#ifdef HAVE_@KIND@@C@
+#ifdef NPYMATH_HAVE_@KIND@@C@
 @ctype@
 npy_@kind@@c@(@ctype@ z)
 {

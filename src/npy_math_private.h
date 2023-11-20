@@ -174,7 +174,7 @@ do {                                                            \
 /*
  * Long double support
  */
-#if defined(HAVE_LDOUBLE_INTEL_EXTENDED_12_BYTES_LE)
+#if defined(NPYMATH_HAVE_LDOUBLE_INTEL_EXTENDED_12_BYTES_LE)
     /*
      * Intel extended 80 bits precision. Bit representation is
      *          |  junk  |     s  |eeeeeeeeeeeeeee|mmmmmmmm................mmmmmmm|
@@ -212,7 +212,7 @@ do {                                                            \
     typedef npymath_uint32 ldouble_man_t;
     typedef npymath_uint32 ldouble_exp_t;
     typedef npymath_uint32 ldouble_sign_t;
-#elif defined(HAVE_LDOUBLE_INTEL_EXTENDED_16_BYTES_LE)
+#elif defined(NPYMATH_HAVE_LDOUBLE_INTEL_EXTENDED_16_BYTES_LE)
     /*
      * Intel extended 80 bits precision, 16 bytes alignment.. Bit representation is
      *          |  junk  |     s  |eeeeeeeeeeeeeee|mmmmmmmm................mmmmmmm|
@@ -249,7 +249,7 @@ do {                                                            \
     typedef npymath_uint32 ldouble_man_t;
     typedef npymath_uint32 ldouble_exp_t;
     typedef npymath_uint32 ldouble_sign_t;
-#elif defined(HAVE_LDOUBLE_MOTOROLA_EXTENDED_12_BYTES_BE)
+#elif defined(NPYMATH_HAVE_LDOUBLE_MOTOROLA_EXTENDED_12_BYTES_BE)
     /*
      * Motorola extended 80 bits precision. Bit representation is
      *          |     s  |eeeeeeeeeeeeeee|  junk  |mmmmmmmm................mmmmmmm|
@@ -287,7 +287,7 @@ do {                                                            \
     typedef npymath_uint32 ldouble_man_t;
     typedef npymath_uint32 ldouble_exp_t;
     typedef npymath_uint32 ldouble_sign_t;
-#elif defined(HAVE_LDOUBLE_IEEE_DOUBLE_BE)
+#elif defined(NPYMATH_HAVE_LDOUBLE_IEEE_DOUBLE_BE)
     /* 64 bits IEEE double precision aligned on 16 bytes: used by ppc arch on
      * Mac OS X */
 
@@ -325,7 +325,7 @@ do {                                                            \
     typedef npymath_uint32 ldouble_man_t;
     typedef npymath_uint32 ldouble_exp_t;
     typedef npymath_uint32 ldouble_sign_t;
-#elif defined(HAVE_LDOUBLE_IEEE_DOUBLE_LE)
+#elif defined(NPYMATH_HAVE_LDOUBLE_IEEE_DOUBLE_LE)
     /* 64 bits IEEE double precision, Little Endian. */
 
     /*
@@ -362,7 +362,7 @@ do {                                                            \
     typedef npymath_uint32 ldouble_man_t;
     typedef npymath_uint32 ldouble_exp_t;
     typedef npymath_uint32 ldouble_sign_t;
-#elif defined(HAVE_LDOUBLE_IEEE_QUAD_BE)
+#elif defined(NPYMATH_HAVE_LDOUBLE_IEEE_QUAD_BE)
     /*
      * IEEE quad precision, Big Endian. Bit representation is
      *          |  s  |eeeeeeeeeee|mmmmmmmm................mmmmmmm|
@@ -397,7 +397,7 @@ do {                                                            \
     typedef npymath_uint64 ldouble_man_t;
     typedef npymath_uint64 ldouble_exp_t;
     typedef npymath_uint32 ldouble_sign_t;
-#elif defined(HAVE_LDOUBLE_IEEE_QUAD_LE)
+#elif defined(NPYMATH_HAVE_LDOUBLE_IEEE_QUAD_LE)
     /*
      * IEEE quad precision, Little Endian. Bit representation is
      *          |  s  |eeeeeeeeeee|mmmmmmmm................mmmmmmm|
@@ -434,8 +434,8 @@ do {                                                            \
     typedef npymath_uint32 ldouble_sign_t;
 #endif
 
-#if !defined(HAVE_LDOUBLE_IBM_DOUBLE_DOUBLE_BE) && \
-    !defined(HAVE_LDOUBLE_IBM_DOUBLE_DOUBLE_LE)
+#if !defined(NPYMATH_HAVE_LDOUBLE_IBM_DOUBLE_DOUBLE_BE) && \
+    !defined(NPYMATH_HAVE_LDOUBLE_IBM_DOUBLE_DOUBLE_LE)
 /* Get the sign bit of x. x should be of type IEEEl2bitsrep */
 #define GET_LDOUBLE_SIGN(x) \
     (((x).a[LDBL_SIGN_INDEX] & LDBL_SIGN_MASK) >> LDBL_SIGN_SHIFT)
@@ -476,6 +476,6 @@ do {                                                            \
      ((x).a[LDBL_MANH_INDEX] & ~LDBL_MANH_MASK) |                       \
      (((IEEEl2bitsrep_part)(v) << LDBL_MANH_SHIFT) & LDBL_MANH_MASK))
 
-#endif /* !HAVE_LDOUBLE_DOUBLE_DOUBLE_* */
+#endif /* !NPYMATH_HAVE_LDOUBLE_DOUBLE_DOUBLE_* */
 
 #endif /* !_NPY_MATH_PRIVATE_H_ */

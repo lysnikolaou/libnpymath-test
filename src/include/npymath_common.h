@@ -29,7 +29,7 @@
  * the double !! is to cast the expression (e.g. NULL) to a boolean required by
  * the intrinsic
  */
-#ifdef HAVE___BUILTIN_EXPECT
+#ifdef NPYMATH_HAVE___BUILTIN_EXPECT
 #define NPYMATH_LIKELY(x) __builtin_expect(!!(x), 1)
 #define NPYMATH_UNLIKELY(x) __builtin_expect(!!(x), 0)
 #else

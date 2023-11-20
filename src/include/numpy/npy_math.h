@@ -211,7 +211,7 @@ double npy_spacing(double x);
 
 /* use builtins to avoid function calls in tight loops
  * only available if npymath_config.h is available (= numpys own build) */
-#ifdef HAVE___BUILTIN_ISNAN
+#ifdef NPYMATH_HAVE___BUILTIN_ISNAN
     #define npy_isnan(x) __builtin_isnan(x)
 #else
     #define npy_isnan(x) isnan(x)
@@ -219,14 +219,14 @@ double npy_spacing(double x);
 
 
 /* only available if npymath_config.h is available (= numpys own build) */
-#ifdef HAVE___BUILTIN_ISFINITE
+#ifdef NPYMATH_HAVE___BUILTIN_ISFINITE
     #define npy_isfinite(x) __builtin_isfinite(x)
 #else
     #define npy_isfinite(x) isfinite((x))
 #endif
 
 /* only available if npymath_config.h is available (= numpys own build) */
-#ifdef HAVE___BUILTIN_ISINF
+#ifdef NPYMATH_HAVE___BUILTIN_ISINF
     #define npy_isinf(x) __builtin_isinf(x)
 #else
     #define npy_isinf(x) isinf((x))
