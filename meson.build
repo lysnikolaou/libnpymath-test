@@ -25,11 +25,4 @@ elif cc.get_id() == 'msvc'
   endif
 endif
 
-py = import('python').find_installation(pure: false)
-py_dep = py.dependency()
-
-if not cc.has_header('Python.h', dependencies: py_dep)
-  error('Cannot compile `Python.h`. Perhaps you need to install python-dev|python-devel')
-endif
-
 subdir('src')
