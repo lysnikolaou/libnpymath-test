@@ -6,5 +6,5 @@ py.install_sources(
     'npymathconfig.h',
     _npymathconfig_h,
   ],
-  subdir: 'numpy' / 'core' / 'include' / 'numpy'
+  subdir: libnpymath_headers_dir
 )

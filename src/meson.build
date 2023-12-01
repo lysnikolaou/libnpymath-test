@@ -285,8 +285,6 @@ if cc.has_header('sys/endian.h')
   cdata.set10('NPYMATH_HAVE_SYS_ENDIAN_H', true)
 endif
 
-np_dir = py.get_install_dir() / 'numpy'
-
 config_h = configure_file(
   input: 'npymath_meson_config.h.in',
   output: 'npymath_meson_config.h',
@@ -331,7 +329,7 @@ libnpymath_sources = [
 ]
 libnpymath_includes = include_directories('include', '.', 'common')
 
-libnpymath = library(
+libnpymath = static_library(
   'npymath',
   libnpymath_sources,
   override_options: ['cpp_std=c++17'],
@@ -340,7 +338,7 @@ libnpymath = library(
   include_directories: libnpymath_includes,
   dependencies: py_dep,
   install: true,
-  install_dir: np_dir / '_core' / 'lib',
+  install_dir: libnpymath_install_dir,
 )
 
 libnpymath_dep = declare_dependency(include_directories: libnpymath_includes, link_with: libnpymath)

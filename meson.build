@@ -25,4 +25,6 @@ elif cc.get_id() == 'msvc'
   endif
 endif
 
+libnpymath_install_dir = py3.get_install_dir() / 'libnpymath'
+libnpymath_headers_dir = 'libnpymath'
 subdir('src')
