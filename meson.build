@@ -4,10 +4,7 @@ project(
   version: '0.0.1',
   license: 'BSD-3',
   meson_version: '>=1.2.1',
-  default_options: [
-    'c_std=c99',
-    'cpp_std=c++17',
-  ],
+  default_options: ['c_std=c99', 'cpp_std=c++17', 'default_library=static'],
 )
 
 cc = meson.get_compiler('c')
@@ -25,6 +22,11 @@ elif cc.get_id() == 'msvc'
   endif
 endif
 
-libnpymath_install_dir = py3.get_install_dir() / 'libnpymath'
-libnpymath_headers_dir = 'libnpymath'
+py = import('python').find_installation(pure: false)
+py_dep = py.dependency()
+
+if not cc.has_header('Python.h', dependencies: py_dep)
+  error('Cannot compile `Python.h`. Perhaps you need to install python-dev|python-devel')
+endif
+
 subdir('src')

@@ -1,10 +1,3 @@
-py = import('python').find_installation(pure: false)
-py_dep = py.dependency()
-
-if not cc.has_header('Python.h', dependencies: py_dep)
-  error('Cannot compile `Python.h`. Perhaps you need to install python-dev|python-devel')
-endif
-
 # We need -lm for all C code (assuming it uses math functions, which is safe to
 # assume for NumPy). For C++ it isn't needed, because libstdc++/libc++ is
 # guaranteed to depend on it.
@@ -329,7 +322,7 @@ libnpymath_sources = [
 ]
 libnpymath_includes = include_directories('include', '.', 'common')
 
-libnpymath = static_library(
+libnpymath = library(
   'npymath',
   libnpymath_sources,
   override_options: ['cpp_std=c++17'],
@@ -338,7 +331,7 @@ libnpymath = static_library(
   include_directories: libnpymath_includes,
   dependencies: py_dep,
   install: true,
-  install_dir: libnpymath_install_dir,
+  install_dir: py.get_install_dir() / get_option('libnpymath_lib_dir'),
 )
 
 libnpymath_dep = declare_dependency(include_directories: libnpymath_includes, link_with: libnpymath)

@@ -1,0 +1,5 @@
+option('libnpymath_lib_dir', type: 'string', value: 'libnpymath',
+       description: 'Installation directory for the libnpymath library')
+option('libnpymath_headers_dir', type: 'string', value: 'libnpymath',
+       description: '''Installation directory for the libnpymath headers.
+                       Relative to the Python installation dir, as returned by py.get_install_dir().''')
