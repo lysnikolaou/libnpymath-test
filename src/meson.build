@@ -296,7 +296,6 @@ _npymathconfig_h = configure_file(
 # ----------------------------
 
 staticlib_cflags = []
-staticlib_cppflags = []
 if cc.get_id() == 'msvc'
   # Disable voltbl section for vc142 to allow link using mingw-w64; see:
   # https://github.com/matthew-brett/dll_investigation/issues/1#issuecomment-1100468171
@@ -317,7 +316,7 @@ libnpymath_sources = [
   src_file.process('ieee754.c.src'),
   src_file.process('npy_math_complex.c.src'),
   npy_math_internal_h,
-  'halffloat.cpp',
+  'halffloat.c',
   'npy_math.c',
 ]
 libnpymath_includes = include_directories('include', '.', 'common')
@@ -327,7 +326,6 @@ libnpymath = library(
   libnpymath_sources,
   override_options: ['cpp_std=c++17'],
   c_args: staticlib_cflags,
-  cpp_args: staticlib_cppflags,
   include_directories: libnpymath_includes,
   dependencies: py_dep,
   install: true,
