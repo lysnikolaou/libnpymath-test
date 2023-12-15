@@ -321,17 +321,26 @@ libnpymath_sources = [
 ]
 libnpymath_includes = include_directories('include', '.', 'common')
 
-libnpymath = library(
-  'npymath',
-  libnpymath_sources,
-  override_options: ['cpp_std=c++17'],
-  c_args: staticlib_cflags,
-  include_directories: libnpymath_includes,
-  dependencies: py_dep,
-  install: true,
-  install_dir: py.get_install_dir() / get_option('libnpymath_lib_dir'),
-)
+if get_option('install_lib')
+  libnpymath = library(
+    'npymath',
+    libnpymath_sources,
+    override_options: ['cpp_std=c++17'],
+    c_args: staticlib_cflags,
+    include_directories: libnpymath_includes,
+    dependencies: py_dep,
+    install: true,
+    install_dir: py.get_install_dir() / get_option('lib_dir'),
+  )
+else
+  libnpymath = library(
+    'npymath',
+    libnpymath_sources,
+    override_options: ['cpp_std=c++17'],
+    c_args: staticlib_cflags,
+    include_directories: libnpymath_includes,
+    dependencies: py_dep,
+  )
+endif
 
 libnpymath_dep = declare_dependency(include_directories: libnpymath_includes, link_with: libnpymath)
-
-subdir('include')
