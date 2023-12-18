@@ -90,16 +90,9 @@ typedef long npymath_long;
 typedef float npymath_float;
 typedef double npymath_double;
 
-#ifdef __cplusplus
-extern "C++" {
-#endif
-#include <complex.h>
-#ifdef __cplusplus
-}
-#endif
+#if defined(__cplusplus)
 
-#if defined(_MSC_VER) && !defined(__INTEL_COMPILER) && defined(__cplusplus)
-typedef struct 
+typedef struct
 {
     double _Val[2];
 } npymath_cdouble;
@@ -113,7 +106,12 @@ typedef struct
 {
     long double _Val[2];
 } npymath_clongdouble;
-#elif defined(_MSC_VER) && !defined(__INTEL_COMPILER) /* && !defined(__cplusplus) */
+
+#else
+
+#include <complex.h>
+
+#if defined(_MSC_VER) && !defined(__INTEL_COMPILER)
 typedef _Dcomplex npymath_cdouble;
 typedef _Fcomplex npymath_cfloat;
 typedef _Lcomplex npymath_clongdouble;
@@ -121,6 +119,8 @@ typedef _Lcomplex npymath_clongdouble;
 typedef double _Complex npymath_cdouble;
 typedef float _Complex npymath_cfloat;
 typedef longdouble_t _Complex npymath_clongdouble;
+#endif
+
 #endif
 
         /* Need to find the number of bits for each type and
