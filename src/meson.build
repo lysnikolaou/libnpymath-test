@@ -326,7 +326,7 @@ libnpymath_sources = [
   'halffloat.c',
   'npy_math.c',
 ]
-libnpymath_includes = include_directories('include', '.', 'common')
+libnpymath_includes = include_directories('include', '.')
 
 if get_option('install_lib')
   libnpymath = library(
@@ -340,7 +340,13 @@ if get_option('install_lib')
   )
 
   py.install_sources(
-    ['include/numpy/npy_math.h', 'include/numpy/halffloat.h'],
+    [
+      'include/numpy/npy_math.h',
+      'include/numpy/halffloat.h',
+      'include/npymath_common.h',
+      'include/npymathconfig.h',
+      _npymathconfig_h,
+    ],
     subdir: get_option('headers_dir'),
   )
 else
