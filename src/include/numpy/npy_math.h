@@ -360,65 +360,18 @@ NPY_INPLACE npymath_longdouble npy_heavisidel(npymath_longdouble x, npymath_long
  * Complex declarations
  */
 
-static inline double npy_creal(const npymath_cdouble z)
-{
-    return ((double *) &z)[0];
-}
-
-static inline void npy_csetreal(npymath_cdouble *z, const double r)
-{
-    ((double *) z)[0] = r;
-}
-
-static inline double npy_cimag(const npymath_cdouble z)
-{
-    return ((double *) &z)[1];
-}
-
-static inline void npy_csetimag(npymath_cdouble *z, const double i)
-{
-    ((double *) z)[1] = i;
-}
-
-static inline float npy_crealf(const npymath_cfloat z)
-{
-    return ((float *) &z)[0];
-}
-
-static inline void npy_csetrealf(npymath_cfloat *z, const float r)
-{
-    ((float *) z)[0] = r;
-}
-
-static inline float npy_cimagf(const npymath_cfloat z)
-{
-    return ((float *) &z)[1];
-}
-
-static inline void npy_csetimagf(npymath_cfloat *z, const float i)
-{
-    ((float *) z)[1] = i;
-}
-
-static inline npymath_longdouble npy_creall(const npymath_clongdouble z)
-{
-    return ((longdouble_t *) &z)[0];
-}
-
-static inline void npy_csetreall(npymath_clongdouble *z, const longdouble_t r)
-{
-    ((longdouble_t *) z)[0] = r;
-}
-
-static inline npymath_longdouble npy_cimagl(const npymath_clongdouble z)
-{
-    return ((longdouble_t *) &z)[1];
-}
-
-static inline void npy_csetimagl(npymath_clongdouble *z, const longdouble_t i)
-{
-    ((longdouble_t *) z)[1] = i;
-}
+npymath_double npy_creal(npymath_cdouble z);
+void npy_csetreal(npymath_cdouble *z, npymath_double r);
+npymath_double npy_cimag(npymath_cdouble z);
+void npy_csetimag(npymath_cdouble *z, npymath_double i);
+npymath_float npy_crealf(npymath_cfloat z);
+void npy_csetrealf(npymath_cfloat *z, npymath_float r);
+npymath_float npy_cimagf(npymath_cfloat z);
+void npy_csetimagf(npymath_cfloat *z, npymath_float i);
+npymath_longdouble npy_creall(npymath_clongdouble z);
+void npy_csetreall(npymath_clongdouble *z, npymath_longdouble r);
+npymath_longdouble npy_cimagl(npymath_clongdouble z);
+void npy_csetimagl(npymath_clongdouble *z, npymath_longdouble i);
 
 #define NPY_CSETREAL(z, r) npy_csetreal(z, r)
 #define NPY_CSETIMAG(z, i) npy_csetimag(z, i)
@@ -427,29 +380,9 @@ static inline void npy_csetimagl(npymath_clongdouble *z, const longdouble_t i)
 #define NPY_CSETREALL(z, r) npy_csetreall(z, r)
 #define NPY_CSETIMAGL(z, i) npy_csetimagl(z, i)
 
-static inline npymath_cdouble npy_cpack(double x, double y)
-{
-    npymath_cdouble z;
-    npy_csetreal(&z, x);
-    npy_csetimag(&z, y);
-    return z;
-}
-
-static inline npymath_cfloat npy_cpackf(float x, float y)
-{
-    npymath_cfloat z;
-    npy_csetrealf(&z, x);
-    npy_csetimagf(&z, y);
-    return z;
-}
-
-static inline npymath_clongdouble npy_cpackl(npymath_longdouble x, npymath_longdouble y)
-{
-    npymath_clongdouble z;
-    npy_csetreall(&z, x);
-    npy_csetimagl(&z, y);
-    return z;
-}
+npymath_cdouble npy_cpack(npymath_double x, npymath_double y);
+npymath_cfloat npy_cpackf(npymath_float x, npymath_float y);
+npymath_clongdouble npy_cpackl(npymath_longdouble x, npymath_longdouble y);
 
 /*
  * Double precision complex functions

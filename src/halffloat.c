@@ -532,7 +532,7 @@ npymath_uint16 npy_doublebits_to_halfbits(npymath_uint64 d)
 #endif
 }
 
-npymath_uint32 npy_halfbits_to_floatbits_helper(npymath_uint16 h)
+npymath_uint32 npy_halfbits_to_floatbits(npymath_uint16 h)
 {
     npymath_uint16 h_exp, h_sig;
     npymath_uint32 f_sgn, f_exp, f_sig;

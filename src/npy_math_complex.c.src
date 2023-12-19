@@ -123,6 +123,39 @@ cdiv@c@(@ctype@ a, @ctype@ b)
  * Custom implementation of missing complex C99 functions
  *=========================================================*/
 
+@type@
+npy_creal@c@(const @ctype@ z)
+{
+    return ((@type@ *) &z)[0];
+}
+
+void
+npy_csetreal@c@(@ctype@ *z, const @type@ r)
+{
+    ((@type@ *) z)[0] = r;
+}
+
+@type@
+npy_cimag@c@(const @ctype@ z)
+{
+    return ((@type@ *) &z)[1];
+}
+
+void
+npy_csetimag@c@(@ctype@ *z, const @type@ i)
+{
+    ((@type@ *) z)[1] = i;
+}
+
+@ctype@
+npy_cpack@c@(@type@ x, @type@ y)
+{
+    @ctype@ z;
+    npy_csetreal@c@(&z, x);
+    npy_csetimag@c@(&z, y);
+    return z;
+}
+
 #ifndef NPYMATH_HAVE_CABS@C@
 @type@
 npy_cabs@c@(@ctype@ z)

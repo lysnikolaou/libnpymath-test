@@ -1,4 +1,8 @@
+option('numpy_build', type: 'boolean', value: false,
+       description: 'Whether libnpymath is getting built as part of numpy')
 option('install_lib', type: 'boolean', value: true,
        description: 'Whether to install the libnpymath library')
+option('headers_dir', type: 'string', value: 'libnpymath',
+       description: 'Installation directory for the libnpymath headers')
 option('lib_dir', type: 'string', value: 'libnpymath',
        description: 'Installation directory for the libnpymath library')

@@ -92,6 +92,14 @@ typedef double npymath_double;
 
 #if defined(__cplusplus)
 
+#ifdef NUMPY_BUILD
+
+typedef struct _npy_cdouble npymath_cdouble;
+typedef struct _npy_cfloat npymath_cfloat;
+typedef struct _npy_clongdouble npymath_clongdouble;
+
+#else
+
 typedef struct
 {
     double _Val[2];
@@ -106,6 +114,8 @@ typedef struct
 {
     long double _Val[2];
 } npymath_clongdouble;
+
+#endif
 
 #else
 

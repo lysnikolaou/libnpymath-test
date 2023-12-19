@@ -306,6 +306,13 @@ if cc.get_id() == 'msvc'
   endif
 endif
 
+if get_option('numpy_build')
+  build_flags = ['-DNUMPY_BUILD']
+else
+  build_flags = []
+endif
+staticlib_cflags += build_flags
+
 npy_math_internal_h = custom_target(
   output: 'npy_math_internal.h',
   input: 'npy_math_internal.h.src',
@@ -325,22 +332,29 @@ if get_option('install_lib')
   libnpymath = library(
     'npymath',
     libnpymath_sources,
-    override_options: ['cpp_std=c++17'],
     c_args: staticlib_cflags,
     include_directories: libnpymath_includes,
     dependencies: py_dep,
     install: true,
     install_dir: py.get_install_dir() / get_option('lib_dir'),
   )
+
+  py.install_sources(
+    ['include/numpy/npy_math.h', 'include/numpy/halffloat.h'],
+    subdir: get_option('headers_dir'),
+  )
 else
   libnpymath = library(
     'npymath',
     libnpymath_sources,
-    override_options: ['cpp_std=c++17'],
     c_args: staticlib_cflags,
     include_directories: libnpymath_includes,
     dependencies: py_dep,
   )
 endif
 
-libnpymath_dep = declare_dependency(include_directories: libnpymath_includes, link_with: libnpymath)
+libnpymath_dep = declare_dependency(
+  compile_args: build_flags,
+  include_directories: libnpymath_includes,
+  link_with: libnpymath,
+)
