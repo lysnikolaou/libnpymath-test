@@ -22,6 +22,15 @@
 #endif
 #endif
 
+#ifndef NPY_INLINE_MATH
+#if defined(NPY_INTERNAL_BUILD) && NPY_INTERNAL_BUILD
+    #define NPY_INLINE_MATH 1
+#else
+    #define NPY_INLINE_MATH 0
+#endif
+#endif
+
+
 /*
  * give a hint to the compiler which branch is more likely or unlikely
  * to occur, e.g. rare error cases:

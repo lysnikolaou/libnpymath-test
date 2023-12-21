@@ -53,6 +53,9 @@
  * is preserved.
  * ====================================================
  */
+#ifndef NPYMATH_INTERNAL_H_
+#define NPYMATH_INTERNAL_H_
+
 #include "npy_math_private.h"
 #ifdef _MSC_VER
 #  include <intrin.h>   // for __popcnt
@@ -741,3 +744,4 @@ npy_popcount@c@(npymath_@type@ a)
 }
 /**end repeat**/
 
+#endif
