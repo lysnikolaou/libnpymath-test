@@ -1,3 +1,6 @@
+/* Optional headers */
+#mesondefine HAVE_FEATURES_H
+
 /* Optional intrinsics */
 #mesondefine NPYMATH_HAVE___BUILTIN_ISNAN
 #mesondefine NPYMATH_HAVE___BUILTIN_ISINF
