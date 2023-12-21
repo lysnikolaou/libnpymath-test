@@ -75,21 +75,27 @@ endforeach
 
 # Mandatory functions: if not found, fail the build
 # Some of these can still be blocklisted if the C99 implementation
-# is buggy, see numpy/core/src/common/npymath_config.h
-mandatory_funcs = [
+# is buggy, see numpy/_core/src/common/npy_config.h
+mandatory_math_funcs = [
   'sin', 'cos', 'tan', 'sinh', 'cosh', 'tanh', 'fabs',
   'floor', 'ceil', 'sqrt', 'log10', 'log', 'exp', 'asin',
   'acos', 'atan', 'fmod', 'modf', 'frexp', 'ldexp',
   'expm1', 'log1p', 'acosh', 'asinh', 'atanh',
-  'rint', 'trunc', 'exp2',
-  'copysign', 'nextafter', 'strtoll', 'strtoull', 'cbrt',
+  'rint', 'trunc', 'exp2', 'copysign', 'nextafter', 'cbrt',
   'log2', 'pow', 'hypot', 'atan2',
-  'csin', 'csinh', 'ccos', 'ccosh', 'ctan', 'ctanh',
-  'creal', 'cimag', 'conj'
 ]
-foreach func: mandatory_funcs
-  if not cc.has_function(func)
-    error('Function `{func}` not found')
+foreach func: mandatory_math_funcs
+  if not cc.has_function(func, prefix: '#include <math.h>', dependencies: m_dep)
+    error(f'Function `@func@` not found')
+  endif
+endforeach
+
+mandatory_complex_math_funcs = [
+  'csin', 'csinh', 'ccos', 'ccosh', 'ctan', 'ctanh', 'creal', 'cimag', 'conj'
+]
+foreach func: mandatory_complex_math_funcs
+  if not cc.has_function(func, prefix: '#include <complex.h>', dependencies: m_dep)
+    error(f'Function `@func@` not found')
   endif
 endforeach
 
@@ -103,13 +109,13 @@ c99_complex_funcs = [
 foreach func: c99_complex_funcs
   func_single = func + 'f'
   func_longdouble = func + 'l'
-  if cc.has_function(func)
+  if cc.has_function(func, prefix: '#include <complex.h>', dependencies: m_dep)
     cdata.set10('NPYMATH_HAVE_' + func.to_upper(), true)
   endif
-  if cc.has_function(func_single)
+  if cc.has_function(func_single, prefix: '#include <complex.h>', dependencies: m_dep)
     cdata.set10('NPYMATH_HAVE_' + func_single.to_upper(), true)
   endif
-  if cc.has_function(func_longdouble)
+  if cc.has_function(func_longdouble, prefix: '#include <complex.h>', dependencies: m_dep)
     cdata.set10('NPYMATH_HAVE_' + func_longdouble.to_upper(), true)
   endif
 endforeach
@@ -118,7 +124,7 @@ endforeach
 # libnpymath as a C99 compat layer, these may still be relevant.
 c99_macros = ['isfinite', 'isinf', 'isnan', 'signbit']
 foreach macro: c99_macros
-  if cc.has_function(macro)
+  if cc.has_function(macro, prefix: '#include <math.h>', dependencies: m_dep)
     cdata.set10('NPYMATH_HAVE_DECL_' + macro.to_upper(), true)
     if not cc.has_header_symbol('Python.h', macro, dependencies: py_dep)
       # Add in config.h as well, except if it will clash with Python's config.h content
@@ -131,35 +137,19 @@ if cc.has_header('features.h')
   cdata.set10('NPYMATH_HAVE_FEATURES_H', true)
 endif
 
-# Max possible optimization flags. We pass this flags to all our dispatch-able
-# (multi_targets) sources.
-compiler_id = cc.get_id()
-max_opt = {
-  'msvc': ['/O2'],
-  'intel-cl': ['/O3'],
-}.get(compiler_id, ['-O3'])
-max_opt = cc.has_multi_arguments(max_opt) ? max_opt : []
-
 # Optional GCC compiler builtins and their call arguments.
 # If given, a required header and definition name (HAVE_ prepended)
 # Call arguments are required as the compiler will do strict signature checking
 optional_intrinsics = [
-  ['__builtin_isnan', '5.', [], []],
-  ['__builtin_isinf', '5.', [], []],
-  ['__builtin_isfinite', '5.', [], []],
-  ['__builtin_expect', '5, 0', [], []],
+  ['__builtin_isnan', '5.'],
+  ['__builtin_isinf', '5.'],
+  ['__builtin_isfinite', '5.'],
+  ['__builtin_expect', '5, 0'],
 ]
 foreach intrin: optional_intrinsics
   func = intrin[0]
   func_args = intrin[1]
-  header = intrin[2]
-  define = intrin[3]
-  code = ''
-  if header.length() == 1
-    header_name = header[0]
-    code += f'#include <@header_name@>'
-  endif
-  code += f'''
+  code = f'''
     #ifdef _MSC_VER
     #pragma function(@func@)
     #endif
@@ -168,11 +158,7 @@ foreach intrin: optional_intrinsics
       return 0;
     };
     '''
-  if define.length() == 1
-    define_name = define[0]
-  else
-    define_name = 'NPYMATH_HAVE_' + func.to_upper()
-  endif
+  define_name = 'NPYMATH_HAVE_' + func.to_upper()
   if cc.links(code)
     cdata.set10(define_name, true)
   endif
