@@ -10,8 +10,8 @@
 /* Disable broken functions on z/OS */
 #if defined (__MVS__)
 
-#define NPY_BLOCK_POWF
-#define NPY_BLOCK_EXPF
+#define NPYMATH_BLOCK_POWF
+#define NPYMATH_BLOCK_EXPF
 #undef NPYMATH_HAVE___THREAD
 
 #endif
@@ -19,13 +19,13 @@
 /* Disable broken MS math functions */
 #if defined(__MINGW32_VERSION)
 
-#define NPY_BLOCK_ATAN2
-#define NPY_BLOCK_ATAN2F
-#define NPY_BLOCK_ATAN2L
+#define NPYMATH_BLOCK_ATAN2
+#define NPYMATH_BLOCK_ATAN2F
+#define NPYMATH_BLOCK_ATAN2L
 
-#define NPY_BLOCK_HYPOT
-#define NPY_BLOCK_HYPOTF
-#define NPY_BLOCK_HYPOTL
+#define NPYMATH_BLOCK_HYPOT
+#define NPYMATH_BLOCK_HYPOTF
+#define NPYMATH_BLOCK_HYPOTL
 
 #endif
 
@@ -65,9 +65,9 @@
 #undef NPYMATH_HAVE_CABSF
 #undef NPYMATH_HAVE_CABSL
 
-#define NPY_BLOCK_HYPOT
-#define NPY_BLOCK_HYPOTF
-#define NPY_BLOCK_HYPOTL
+#define NPYMATH_BLOCK_HYPOT
+#define NPYMATH_BLOCK_HYPOTF
+#define NPYMATH_BLOCK_HYPOTL
 
 #endif
 
@@ -75,13 +75,13 @@
 /* Intel C for Windows uses POW for 64 bits longdouble*/
 #if defined(_MSC_VER) && defined(__INTEL_COMPILER)
 #if NPYMATH_SIZEOF_LONGDOUBLE == 8
-#define NPY_BLOCK_POWL
+#define NPYMATH_BLOCK_POWL
 #endif
 #endif /* defined(_MSC_VER) && defined(__INTEL_COMPILER) */
 
 /* powl gives zero division warning on OS X, see gh-8307 */
 #if defined(__APPLE__)
-#define NPY_BLOCK_POWL
+#define NPYMATH_BLOCK_POWL
 #endif
 
 #ifdef __CYGWIN__
@@ -118,7 +118,7 @@
 #undef NPYMATH_HAVE_CACOS
 
 /* log2(exp2(i)) off by a few eps */
-#define NPY_BLOCK_LOG2
+#define NPYMATH_BLOCK_LOG2
 
 /* np.power(..., dtype=np.complex256) doesn't report overflow */
 #undef NPYMATH_HAVE_CPOWL
@@ -161,24 +161,24 @@
 #else   /* defined(__GLIBC) */
 /* musl linux?, see issue #25092 */
 
-#undef HAVE_CASIN
-#undef HAVE_CASINF
-#undef HAVE_CASINL
-#undef HAVE_CASINH
-#undef HAVE_CASINHF
-#undef HAVE_CASINHL
-#undef HAVE_CATAN
-#undef HAVE_CATANF
-#undef HAVE_CATANL
-#undef HAVE_CATANH
-#undef HAVE_CATANHF
-#undef HAVE_CATANHL
-#undef HAVE_CACOS
-#undef HAVE_CACOSF
-#undef HAVE_CACOSL
-#undef HAVE_CACOSH
-#undef HAVE_CACOSHF
-#undef HAVE_CACOSHL
+#undef NPYMATH_HAVE_CASIN
+#undef NPYMATH_HAVE_CASINF
+#undef NPYMATH_HAVE_CASINL
+#undef NPYMATH_HAVE_CASINH
+#undef NPYMATH_HAVE_CASINHF
+#undef NPYMATH_HAVE_CASINHL
+#undef NPYMATH_HAVE_CATAN
+#undef NPYMATH_HAVE_CATANF
+#undef NPYMATH_HAVE_CATANL
+#undef NPYMATH_HAVE_CATANH
+#undef NPYMATH_HAVE_CATANHF
+#undef NPYMATH_HAVE_CATANHL
+#undef NPYMATH_HAVE_CACOS
+#undef NPYMATH_HAVE_CACOSF
+#undef NPYMATH_HAVE_CACOSL
+#undef NPYMATH_HAVE_CACOSH
+#undef NPYMATH_HAVE_CACOSHF
+#undef NPYMATH_HAVE_CACOSHL
 
 #endif  /* defined(__GLIBC) */
 #endif  /* defined(NPYMATH_HAVE_FEATURES_H) */
