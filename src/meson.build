@@ -347,6 +347,7 @@ endif
 
 libnpymath_dep = declare_dependency(
   compile_args: build_flags,
+  sources: [npy_math_internal_h],
   include_directories: libnpymath_includes,
   link_with: libnpymath,
 )
