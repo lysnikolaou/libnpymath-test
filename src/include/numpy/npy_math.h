@@ -7,7 +7,7 @@
 
 /* By adding static inline specifiers to npy_math function definitions when
    appropriate, compiler is given the opportunity to optimize */
-#if NPY_INLINE_MATH
+#if NPYMATH_INLINE_MATH
 #define NPY_INPLACE static inline
 #else
 #define NPY_INPLACE
@@ -504,7 +504,7 @@ void npy_set_floatstatus_invalid(void);
 }
 #endif
 
-#if NPY_INLINE_MATH
+#if NPYMATH_INLINE_MATH
 #include "npy_math_internal.h"
 #endif
 

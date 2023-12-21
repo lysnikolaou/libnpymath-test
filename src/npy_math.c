@@ -5,5 +5,5 @@
  * function definitions are switched off.
  */
 
-#define NPY_INLINE_MATH 0
+#define NPYMATH_INLINE_MATH 0
 #include "npy_math_internal.h"

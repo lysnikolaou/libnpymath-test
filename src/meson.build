@@ -126,10 +126,6 @@ c99_macros = ['isfinite', 'isinf', 'isnan', 'signbit']
 foreach macro: c99_macros
   if cc.has_function(macro, prefix: '#include <math.h>', dependencies: m_dep)
     cdata.set10('NPYMATH_HAVE_DECL_' + macro.to_upper(), true)
-    if not cc.has_header_symbol('Python.h', macro, dependencies: py_dep)
-      # Add in config.h as well, except if it will clash with Python's config.h content
-      cdata.set10('NPYMATH_HAVE_DECL_' + macro.to_upper(), true)
-    endif
   endif
 endforeach
 
@@ -281,7 +277,10 @@ _npymathconfig_h = configure_file(
 # Build npymath static library
 # ----------------------------
 
-staticlib_cflags = []
+staticlib_cflags = [
+  '-DNPYMATH_INTERNAL_BUILD',
+  '-DNPYMATH_HAVE_CONFIG_H',
+]
 if cc.get_id() == 'msvc'
   # Disable voltbl section for vc142 to allow link using mingw-w64; see:
   # https://github.com/matthew-brett/dll_investigation/issues/1#issuecomment-1100468171

@@ -6,16 +6,19 @@
 
 /* numpconfig.h is auto-generated */
 #include "npymathconfig.h"
+#ifdef NPYMATH_HAVE_CONFIG_H
+#include "npymath_config.h"
+#endif
 
 /*
  * using static inline modifiers when defining npy_math functions
  * allows the compiler to make optimizations when possible
  */
-#ifndef NPY_INLINE_MATH
-#if defined(NPY_INTERNAL_BUILD) && NPY_INTERNAL_BUILD
-    #define NPY_INLINE_MATH 1
+#ifndef NPYMATH_INLINE_MATH
+#if defined(NPYMATH_INTERNAL_BUILD) && NPYMATH_INTERNAL_BUILD
+    #define NPYMATH_INLINE_MATH 1
 #else
-    #define NPY_INLINE_MATH 0
+    #define NPYMATH_INLINE_MATH 0
 #endif
 #endif
 
