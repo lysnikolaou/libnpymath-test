@@ -6,7 +6,7 @@
 
 /* numpconfig.h is auto-generated */
 #include "numpy/npymath/config.h"
-#ifdef NPYMATH_HAVE_CONFIG_H
+#if defined(NPYMATH_HAVE_CONFIG_H) || defined(HAVE_NPY_CONFIG_H)
 #include "numpy/npymath/block.h"
 #endif
 
