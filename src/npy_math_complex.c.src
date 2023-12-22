@@ -32,8 +32,8 @@
  * SUCH DAMAGE.
  */
 #include "npy_math_common.h"
-#include "npy_math_private.h"
-#include "utils.h"
+#include "numpy/npymath/private.h"
+#include "numpy/npymath/utils.h"
 
 /*
  * Hack inherited from BSD, the intent is to set the FPU inexact

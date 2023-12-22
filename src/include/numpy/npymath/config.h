@@ -1,7 +1,7 @@
 #ifndef NPYMATHCONFIG_H_
 #define NPYMATHCONFIG_H_
 
-#include "_npymathconfig.h"
+#include "numpy/npymath/_config.h"
 
 /*
  * On Mac OS X, because there is only one configuration stage for all the archs

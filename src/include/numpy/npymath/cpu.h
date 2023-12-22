@@ -24,7 +24,7 @@
 #ifndef NPYMATH_CPU_H_
 #define NPYMATH_CPU_H_
 
-#include "npymathconfig.h"
+#include "numpy/npymath/config.h"
 
 #if defined( __i386__ ) || defined(i386) || defined(_M_IX86)
     /*

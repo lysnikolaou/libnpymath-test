@@ -56,7 +56,7 @@
 #ifndef NPYMATH_INTERNAL_H_
 #define NPYMATH_INTERNAL_H_
 
-#include "npy_math_private.h"
+#include "numpy/npymath/private.h"
 #ifdef _MSC_VER
 #  include <intrin.h>   // for __popcnt
 #endif

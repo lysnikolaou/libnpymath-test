@@ -5,9 +5,9 @@
 #include <Python.h>
 
 /* numpconfig.h is auto-generated */
-#include "npymathconfig.h"
+#include "numpy/npymath/config.h"
 #ifdef NPYMATH_HAVE_CONFIG_H
-#include "npymath_config.h"
+#include "numpy/npymath/block.h"
 #endif
 
 /*

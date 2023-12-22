@@ -32,7 +32,7 @@
 
 #ifndef NPYMATH_BYTE_ORDER
     /* Set endianness info using target CPU */
-    #include "npymath_cpu.h"
+    #include "numpy/npymath/cpu.h"
 
     #define NPYMATH_LITTLE_ENDIAN 1234
     #define NPYMATH_BIG_ENDIAN 4321

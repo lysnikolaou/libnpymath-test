@@ -5,5 +5,5 @@
 #include <math.h>
 #include <float.h>
 
-#include "npymath_config.h"
+#include "numpy/npymath/block.h"
 #include "numpy/npy_math.h"

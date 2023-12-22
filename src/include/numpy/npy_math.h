@@ -1,7 +1,7 @@
 #ifndef NPY_MATH_H_
 #define NPY_MATH_H_
 
-#include "npymath_common.h"
+#include "numpy/npymath/common.h"
 
 #include <math.h>
 
@@ -505,7 +505,7 @@ void npy_set_floatstatus_invalid(void);
 #endif
 
 #if defined(NPYMATH_INLINE_MATH) || defined(NPY_INLINE_MATH)
-#include "npy_math_internal.h"
+#include "numpy/npymath/internal.h"
 #endif
 
 #endif  /* NPY_MATH_H_ */

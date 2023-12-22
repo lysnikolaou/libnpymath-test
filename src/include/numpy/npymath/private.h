@@ -27,11 +27,11 @@ using std::isless;
 #include <math.h>
 #endif
 
-#include "npymath_fpmath.h"
+#include "numpy/npymath/fpmath.h"
 
 #include "numpy/npy_math.h"
-#include "npymath_endian.h"
-#include "npymath_common.h"
+#include "numpy/npymath/endian.h"
+#include "numpy/npymath/common.h"
 
 /*
  * The original fdlibm code used statements like:

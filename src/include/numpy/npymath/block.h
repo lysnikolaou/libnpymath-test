@@ -1,9 +1,9 @@
 #ifndef NPYMATH_CONFIG_H_
 #define NPYMATH_CONFIG_H_
 
-#include "npymath_meson_config.h"
-#include "npymathconfig.h"
-#include "utils.h"
+#include "numpy/npymath/meson_config.h"
+#include "numpy/npymath/config.h"
+#include "numpy/npymath/utils.h"
 
 /* blocklist */
 

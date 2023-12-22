@@ -260,19 +260,7 @@ if cc.has_header('sys/endian.h')
   cdata.set10('NPYMATH_HAVE_SYS_ENDIAN_H', true)
 endif
 
-config_h = configure_file(
-  input: 'npymath_meson_config.h.in',
-  output: 'npymath_meson_config.h',
-  configuration: cdata,
-  install: false
-)
-
-_npymathconfig_h = configure_file(
-  input: 'include/_npymathconfig.h.in',
-  output: '_npymathconfig.h',
-  configuration: cdata,
-  install: false,
-)
+subdir('include/numpy/npymath')
 
 # Build npymath static library
 # ----------------------------
@@ -298,20 +286,14 @@ else
 endif
 staticlib_cflags += build_flags
 
-npy_math_internal_h = custom_target(
-  output: 'npy_math_internal.h',
-  input: 'npy_math_internal.h.src',
-  command: [src_file_cli, '@INPUT@', '-o', '@OUTPUT@'],
-)
-
 libnpymath_sources = [
   src_file.process('ieee754.c.src'),
   src_file.process('npy_math_complex.c.src'),
-  npy_math_internal_h,
+  internal_h,
   'halffloat.c',
   'npy_math.c',
 ]
-libnpymath_includes = include_directories('include', '.')
+libnpymath_includes = include_directories('include')
 
 if get_option('install_lib')
   libnpymath = library(
@@ -328,11 +310,24 @@ if get_option('install_lib')
     [
       'include/numpy/npy_math.h',
       'include/numpy/halffloat.h',
-      'include/npymath_common.h',
-      'include/npymathconfig.h',
-      _npymathconfig_h,
     ],
     subdir: get_option('headers_dir'),
+  )
+
+  py.install_sources(
+    [
+      'include/numpy/npymath/common.h',
+      'include/numpy/npymath/config.h',
+      _config_h,
+      meson_config_h,
+      'include/numpy/npymath/block.h',
+      'include/numpy/npymath/cpu.h',
+      'include/numpy/npymath/endian.h',
+      'include/numpy/npymath/fpmath.h',
+      'include/numpy/npymath/utils.h',
+      'include/numpy/npymath/private.h',
+    ],
+    subdir: get_option('headers_dir') / 'npymath',
   )
 else
   libnpymath = library(
@@ -346,7 +341,7 @@ endif
 
 libnpymath_dep = declare_dependency(
   compile_args: build_flags,
-  sources: [npy_math_internal_h],
+  sources: [internal_h],
   include_directories: libnpymath_includes,
   link_with: libnpymath,
 )
