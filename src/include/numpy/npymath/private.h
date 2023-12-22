@@ -15,8 +15,8 @@
  * $FreeBSD$
  */
 
-#ifndef _NPY_MATH_PRIVATE_H_
-#define _NPY_MATH_PRIVATE_H_
+#ifndef _NPYMATH_PRIVATE_H_
+#define _NPYMATH_PRIVATE_H_
 
 #include <Python.h>
 #ifdef __cplusplus
@@ -478,4 +478,4 @@ do {                                                            \
 
 #endif /* !NPYMATH_HAVE_LDOUBLE_DOUBLE_DOUBLE_* */
 
-#endif /* !_NPY_MATH_PRIVATE_H_ */
+#endif /* !_NPYMATH_PRIVATE_H_ */

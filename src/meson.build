@@ -265,10 +265,7 @@ subdir('include/numpy/npymath')
 # Build npymath static library
 # ----------------------------
 
-staticlib_cflags = [
-  '-DNPYMATH_INTERNAL_BUILD',
-  '-DNPYMATH_HAVE_CONFIG_H',
-]
+staticlib_cflags = []
 if cc.get_id() == 'msvc'
   # Disable voltbl section for vc142 to allow link using mingw-w64; see:
   # https://github.com/matthew-brett/dll_investigation/issues/1#issuecomment-1100468171
@@ -280,7 +277,11 @@ if cc.get_id() == 'msvc'
 endif
 
 if get_option('numpy_build')
-  build_flags = ['-DNUMPY_BUILD']
+  build_flags = [
+    '-DNUMPY_BUILD',
+    '-DNPYMATH_INTERNAL_BUILD',
+    '-DNPYMATH_HAVE_CONFIG_H',
+  ]
 else
   build_flags = []
 endif

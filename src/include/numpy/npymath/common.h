@@ -6,7 +6,7 @@
 
 /* numpconfig.h is auto-generated */
 #include "numpy/npymath/config.h"
-#if defined(NPYMATH_HAVE_CONFIG_H) || defined(HAVE_NPY_CONFIG_H)
+#if defined(NPYMATH_HAVE_CONFIG_H)
 #include "numpy/npymath/block.h"
 #endif
 
@@ -21,15 +21,6 @@
     #define NPYMATH_INLINE_MATH 0
 #endif
 #endif
-
-#ifndef NPY_INLINE_MATH
-#if defined(NPY_INTERNAL_BUILD) && NPY_INTERNAL_BUILD
-    #define NPY_INLINE_MATH 1
-#else
-    #define NPY_INLINE_MATH 0
-#endif
-#endif
-
 
 /*
  * give a hint to the compiler which branch is more likely or unlikely

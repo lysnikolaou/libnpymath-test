@@ -52,7 +52,7 @@ if cc_id.startswith('clang')
     # Detect whether the compiler actually supports strict handling of floating-point exceptions
     # by treating warnings as errors.
     if cc.compiles('int main() { return 0; }', args: [trapping_math, '-Werror'])
-      trapping_math = [trapping_math, '-DNPY_HAVE_CLANG_FPSTRICT']
+      trapping_math = [trapping_math]
     else
       # Suppress warnings about unsupported floating-point optimization.
       trapping_math = [trapping_math, '-Wno-unsupported-floating-point-opt']
